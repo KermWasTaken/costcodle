@@ -103,6 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: end;
+  -webkit-justify-content: flex-end;
 
   padding-right: 4px;
 
