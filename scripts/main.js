@@ -227,7 +227,7 @@ function copyStats() {
     output += `\n`;
   });
 
-  output += `https://www.costcodle.com`;
+  output += `https://costcodle.com`;
   navigator.clipboard.writeText(output);
 
   displayToast();
