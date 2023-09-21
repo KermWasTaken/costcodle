@@ -34,7 +34,6 @@ const shareButton = document.getElementById("share-button");
 shareButton.addEventListener("click", copyStats);
 
 //User stats object
-localStorage.removeItem("stats");
 const userStats = JSON.parse(localStorage.getItem("stats")) || {
   numGames: 0,
   numWins: 0,
@@ -44,7 +43,6 @@ const userStats = JSON.parse(localStorage.getItem("stats")) || {
 };
 
 //User game state
-localStorage.removeItem("state");
 const gameState = JSON.parse(localStorage.getItem("state")) || {
   gameNumber: -1,
   guesses: [],
