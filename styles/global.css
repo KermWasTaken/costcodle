@@ -1,0 +1,236 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  font-family: "VT323", monospace;
+  font-size: 30px;
+
+  background-color: gainsboro;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+a {
+  color: black;
+}
+
+h3 {
+  font-weight: normal;
+
+  margin-bottom: 6px;
+}
+
+ul {
+  margin-left: 1rem;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.costco-red {
+  color: rgb(227, 42, 54);
+}
+
+.costco-blue {
+  color: rgb(0, 96, 169);
+}
+
+.hide {
+  display: none;
+}
+
+.transparent-background {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+#main-page {
+  display: flex;
+  flex-direction: column;
+
+  width: 100wh;
+  height: 100vh;
+}
+
+#site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: gainsboro;
+}
+
+#header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 344px;
+
+  border-bottom: 2px solid gray;
+}
+
+#title {
+  font-size: 60px;
+}
+
+#info-button {
+  font-family: "VT323", monospace;
+  font-size: 55px;
+
+  width: 30px;
+  height: 60px;
+
+  cursor: pointer;
+
+  border: none;
+  background: none;
+}
+
+#stat-button {
+  font-size: 30px;
+
+  width: 30px;
+  height: 60px;
+
+  cursor: pointer;
+
+  border: none;
+  background: none;
+}
+
+#site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 2px solid gray;
+  background-color: gainsboro;
+}
+
+#database-link {
+  margin-left: 12px;
+}
+
+#dev-name {
+  margin-right: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+@media screen and (max-height: 900px) {
+  #image-container {
+    width: 275px;
+    height: 275px;
+  }
+
+  #product-info {
+    width: 275px;
+  }
+}
+
+@media screen and (max-height: 850px) {
+  #image-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  #product-info {
+    width: 250px;
+  }
+}
+
+@media screen and (max-height: 825px) {
+  #image-container {
+    width: 225px;
+    height: 225px;
+  }
+
+  #product-info {
+    width: 225px;
+  }
+
+  #site-footer {
+    font-size: 24px;
+  }
+
+  #game-stats {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-height: 785px) {
+  #image-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  #product-info {
+    width: 200px;
+  }
+}
+
+@media screen and (max-height: 760px) {
+  #image-container {
+    height: 175px;
+  }
+
+  #product-image {
+    height: 175;
+  }
+
+  #product-info {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-height: 725px) {
+  #image-container {
+    height: 150px;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  #image-container {
+    height: 125px;
+  }
+}
+
+@media screen and (max-height: 675px) {
+  #info-card {
+    margin-top: 20px;
+  }
+}
