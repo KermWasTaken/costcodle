@@ -89,12 +89,12 @@ img {
   border-bottom: 2px solid gray;
 }
 
-#title {
+.title {
   font-size: 60px;
 }
 
 .info-title {
-  font-size: 48px;
+  font-size: 52px;
 }
 
 #info-button {
