@@ -387,6 +387,10 @@ function switchState(event) {
   const overlayElem = document.getElementById(overlayBtnClicked);
   const title = document.getElementById("title");
 
+  if (title.classList.contains("info-title")) {
+    title.classList.remove("info-title");
+  }
+
   if (overlayElem.style.display === "flex") {
     title.innerHTML = `COSTCO<span class="costco-blue">DLE</span>`;
     overlayElem.style.display = "none";
@@ -403,6 +407,9 @@ function switchState(event) {
 
   function renderInfo() {
     title.innerHTML = `HOW TO <span class="costco-blue">PLAY</span>`;
+    if (!title.classList.contains("info-title")) {
+      title.classList.add("info-title");
+    }
     overlayElem.style.display = "flex";
   }
 
