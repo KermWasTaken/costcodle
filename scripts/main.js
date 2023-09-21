@@ -385,7 +385,7 @@ function switchState(event) {
   const overlayElem = document.getElementById(overlayBtnClicked);
   const title = document.getElementById("title");
 
-  if (title.classList.contains("info-title")) {
+  if (title.classList.contains("info-title") && overlayBtnClicked !== "info-overlay") {
     title.classList.remove("info-title");
   }
 
