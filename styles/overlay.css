@@ -1,0 +1,151 @@
+.overlay {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: start;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background-color: gainsboro;
+}
+
+.overlay-body {
+  overflow-y: auto;
+
+  width: 350px;
+  height: 100%;
+  padding: 0 6px;
+}
+
+#info-body {
+  font-size: 20px;
+}
+
+.info-section {
+  margin-top: 8px;
+  padding-bottom: 8px;
+
+  border-bottom: 2px solid gray;
+}
+
+#stat-body {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: gainsboro;
+}
+
+#stats-toast {
+  position: absolute;
+  top: 16px;
+
+  width: 300px;
+  padding: 18px;
+
+  font-size: 24px;
+  color: white;
+  border-radius: 8px;
+  background-color: rgb(0, 0, 0);
+}
+
+#statistics-title {
+  margin-bottom: 24px;
+}
+
+#statistics {
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.statistic {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stat {
+  font-size: 66px;
+}
+
+.descriptor {
+  font-size: 22px;
+}
+
+.graph {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.graph-label {
+  margin-right: 6px;
+}
+
+.graphElem {
+  font-size: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: end;
+
+  padding-right: 4px;
+
+  color: white;
+  background-color: rgb(0, 96, 169);
+}
+
+.graph-row {
+  display: flex;
+  align-items: center;
+
+  height: 26px;
+  margin-bottom: 15px;
+}
+
+.share-button-container {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.share-button {
+  font-family: "VT323", monospace;
+  font-size: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 64px;
+
+  color: white;
+  border: none;
+  border-radius: 32px;
+  background-color: rgb(227, 42, 54);
+}
+
+.share-button:hover {
+  background-color: rgba(227, 42, 54, 0.8);
+}
+
+.share-icon {
+  height: 32px;
+  margin-left: 16px;
+}

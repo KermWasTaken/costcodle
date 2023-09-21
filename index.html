@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COSTCODLE</title>
+
+    <link rel="icon" type="image/x-icon" href="./assets/CD.ico" />
+
+    <link rel="stylesheet" href="styles/game.css" />
+    <link rel="stylesheet" href="styles/overlay.css" />
+    <link rel="stylesheet" href="styles/global.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+      defer
+    ></script>
+
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/searchBar.js" defer></script>
+  </head>
+
+  <body>
+    <div id="main-page">
+      <header id="site-header">
+        <div id="header-container">
+          <button id="info-button" data-overlay="info-overlay" type="button">
+            ?
+          </button>
+          <h1 id="title" class="costco-red">
+            <center>COSTCO<span class="costco-blue">DLE</span></center>
+          </h1>
+          <button id="stat-button" data-overlay="stats-overlay" type="button">
+            <img
+              src="./assets/stat-logo.svg"
+              style="height: 100%; width: 100%"
+            />
+          </button>
+        </div>
+      </header>
+
+      <main id="game-container">
+        <div id="info-card" class="animate__animated">
+          <div id="image-container"></div>
+          <div id="product-info"></div>
+        </div>
+        <div id="game-stats"></div>
+        <div id="guesses-container">
+          <div id="warning-toast" class="animate__animated hide">
+            <center>Invalid Guess ⚠️</center>
+          </div>
+          <div id="1" class="guess-container"></div>
+          <div id="2" class="guess-container"></div>
+          <div id="3" class="guess-container"></div>
+          <div id="4" class="guess-container"></div>
+          <div id="5" class="guess-container"></div>
+          <div id="6" class="guess-container"></div>
+          <div class="guess-container transparent-background">
+            <div id="input-container">
+              <div id="input-label">$</div>
+              <input
+                id="guess-input"
+                type="text"
+                pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
+                data-type="currency"
+                placeholder="Enter a guess..."
+              />
+            </div>
+            <div id="button-container">
+              <button id="guess-button" class="active">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+        <div id="info-overlay" class="overlay" style="display: none">
+          <div id="info-body" class="overlay-body">
+            <div class="info-section">
+              <h3><u>The game</u></h3>
+              <p>
+                Guess the <span class="costco-red">COSTCO</span
+                ><span class="costco-blue">DLE</span> in 6 tries.
+              </p>
+              <br />
+              <ul style="list-style-type: square">
+                <li>Each guess must be a valid price.</li>
+                <li>
+                  Incorrect guesses will help guide you to the target price.
+                </li>
+              </ul>
+              <br />
+              <p>If you guess within 5% of the target price, you win!</p>
+              <br />
+              <p>
+                A new <span class="costco-red">COSTCO</span
+                ><span class="costco-blue">DLE</span> is available every day!
+              </p>
+            </div>
+            <div class="info-section">
+              <h3><u>Examples</u></h3>
+              <div class="guess-container transparent-background">
+                <div class="guess-value-container animate__flipInX">$10.00</div>
+                <div
+                  class="guess-direction-container animate__flipInX guess-far"
+                >
+                  &uarr;
+                </div>
+              </div>
+              <p>
+                First guess of $10.00 is low by more than 25% of the target
+                price.
+              </p>
+              <br />
+              <div class="guess-container transparent-background">
+                <div class="guess-value-container animate__flipInX">$18.00</div>
+                <div
+                  class="guess-direction-container animate__flipInX guess-near"
+                >
+                  &darr;
+                </div>
+              </div>
+              <p>
+                Next guess of $18.00 is too high but within 25% of the target
+                price.
+              </p>
+              <br />
+              <div class="guess-container transparent-background">
+                <div class="guess-value-container animate__flipInX">$16.00</div>
+                <div
+                  class="guess-direction-container animate__flipInX guess-win"
+                >
+                  &check;
+                </div>
+              </div>
+              <p>
+                The guess of $16.00 was within 5% of the target price! You win!
+              </p>
+            </div>
+            <div class="info-section">
+              <p>
+                If you would like to support my work, you can
+                <a
+                  href="https://www.buymeacoffee.com/kerm"
+                  target="_blank"
+                  noreferrer="noopener noreferrer"
+                  >buy me a coffee!<span style="font-size: 14px">☕</span></a
+                >
+              </p>
+            </div>
+            <div class="info-section">
+              <p>
+                Source code available on my
+                <a
+                  href="https://github.com/KermWasTaken"
+                  target="_blank"
+                  noreferrer="noopener noreferrer"
+                  >GitHub</a
+                >!
+              </p>
+              <p>
+                Suggestions? Find a bug?
+                <a href="mailto: costcodle@gmail.com">Let me know!</a>
+              </p>
+            </div>
+            <div class="info-section">
+              <p>
+                Special thanks to
+                <a
+                  href="https://oec.world/en/tradle/"
+                  target="_blank"
+                  noreferrer="noopener noreferrer"
+                >
+                  <span style="color: rgb(255, 166, 63)">TRAD</span>LE</a
+                >
+                and
+                <a
+                  href="https://www.nytimes.com/games/wordle/index.html"
+                  target="_blank"
+                  noreferrer="noopener noreferrer"
+                  >Wordle</a
+                >
+                for inspiring <span class="costco-red">COSTCO</span
+                ><span class="costco-blue">DLE</span>!
+              </p>
+              <br />
+              <p>And thank you for checking out my game!</p>
+            </div>
+            <div style="margin-top: 8px">
+              <p>
+                Created by
+                <a
+                  href="https://github.com/KermWasTaken"
+                  target="_blank"
+                  noreferrer="noopener noreferrer"
+                  >@Kerm</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="stats-overlay" class="overlay" style="display: none">
+          <div id="stat-body" class="overlay-body">
+            <div id="stats-toast" class="animate__animated hide">
+              <center>Results copied to clipboard</center>
+            </div>
+            <p id="statistics-title">STATISTICS</p>
+            <div id="statistics">
+              <div class="statistic">
+                <div id="number-wins" class="stat"></div>
+                <div class="descriptor">Played</div>
+              </div>
+              <div class="statistic">
+                <div id="win-percent" class="stat"></div>
+                <div class="descriptor">Win %</div>
+              </div>
+              <div class="statistic">
+                <div id="current-streak" class="stat"></div>
+                <div class="descriptor">
+                  <center>Current<br />Streak</center>
+                </div>
+              </div>
+              <div class="statistic">
+                <div id="max-streak" class="stat"></div>
+                <div class="descriptor">
+                  <center>Max<br />Streak</center>
+                </div>
+              </div>
+            </div>
+            <p>GUESS DISTRIBUTION</p>
+            <div class="graph">
+              <div class="graph-row">
+                <div class="graph-label">1</div>
+                <div id="graph-1" class="graphElem"></div>
+              </div>
+              <div class="graph-row">
+                <div class="graph-label">2</div>
+                <div id="graph-2" class="graphElem"></div>
+              </div>
+              <div class="graph-row">
+                <div class="graph-label">3</div>
+                <div id="graph-3" class="graphElem"></div>
+              </div>
+              <div class="graph-row">
+                <div class="graph-label">4</div>
+                <div id="graph-4" class="graphElem"></div>
+              </div>
+              <div class="graph-row">
+                <div class="graph-label">5</div>
+                <div id="graph-5" class="graphElem"></div>
+              </div>
+              <div class="graph-row">
+                <div class="graph-label">6</div>
+                <div id="graph-6" class="graphElem"></div>
+              </div>
+            </div>
+            <div class="share-button-container">
+              <button id="share-button" class="share-button">
+                Share<img src="./assets/share-icon.svg" class="share-icon" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer id="site-footer">
+        <div id="database-link">
+          <a
+            href="https://costcofdb.com/food-database"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Costco Food Database</a
+          >
+        </div>
+        <div id="dev-name">&copy;Kerm</div>
+      </footer>
+    </div>
+  </body>
+</html>
