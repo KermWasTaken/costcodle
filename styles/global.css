@@ -93,6 +93,10 @@ img {
   font-size: 60px;
 }
 
+.info-title {
+  font-size: 56px;
+}
+
 #info-button {
   font-family: "VT323", monospace;
   font-size: 55px;
