@@ -52,6 +52,9 @@
       </header>
 
       <main id="game-container">
+        <div id="share-toast" class="animate__animated hide">
+          <center>Results copied to clipboard</center>
+        </div>
         <div id="info-card" class="animate__animated">
           <div id="image-container"></div>
           <div id="product-info"></div>
@@ -67,8 +70,11 @@
           <div id="4" class="guess-container"></div>
           <div id="5" class="guess-container"></div>
           <div id="6" class="guess-container"></div>
-          <div class="guess-container transparent-background">
-            <div id="input-container">
+          <div
+            id="input-container"
+            class="guess-container transparent-background"
+          >
+            <div id="text-input-container">
               <div id="input-label">$</div>
               <input
                 id="guess-input"
@@ -210,9 +216,6 @@
         </div>
         <div id="stats-overlay" class="overlay" style="display: none">
           <div id="stat-body" class="overlay-body">
-            <div id="stats-toast" class="animate__animated hide">
-              <center>Results copied to clipboard</center>
-            </div>
             <p id="statistics-title">STATISTICS</p>
             <div id="statistics">
               <div class="statistic">
@@ -262,11 +265,6 @@
                 <div class="graph-label">6</div>
                 <div id="graph-6" class="graphElem"></div>
               </div>
-            </div>
-            <div class="share-button-container">
-              <button id="share-button" class="share-button">
-                Share<img src="./assets/share-icon.svg" class="share-icon" />
-              </button>
             </div>
           </div>
         </div>

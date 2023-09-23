@@ -45,19 +45,6 @@
   background-color: gainsboro;
 }
 
-#stats-toast {
-  position: absolute;
-  top: 16px;
-
-  width: 300px;
-  padding: 18px;
-
-  font-size: 24px;
-  color: white;
-  border-radius: 8px;
-  background-color: rgb(0, 0, 0);
-}
-
 #statistics-title {
   margin-bottom: 24px;
 }
@@ -102,8 +89,8 @@
 
   display: flex;
   align-items: center;
-  justify-content: end;
   -webkit-justify-content: flex-end;
+  justify-content: end;
 
   padding-right: 4px;
 
@@ -117,36 +104,4 @@
 
   height: 26px;
   margin-bottom: 15px;
-}
-
-.share-button-container {
-  display: flex;
-  justify-content: center;
-
-  width: 100%;
-}
-
-.share-button {
-  font-family: "VT323", monospace;
-  font-size: 36px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 8px 64px;
-
-  color: white;
-  border: none;
-  border-radius: 32px;
-  background-color: rgb(227, 42, 54);
-}
-
-.share-button:hover {
-  background-color: rgba(227, 42, 54, 0.8);
-}
-
-.share-icon {
-  height: 32px;
-  margin-left: 16px;
 }

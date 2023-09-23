@@ -30,9 +30,6 @@ infoButton.addEventListener("click", switchState);
 const statButton = document.getElementById("stat-button");
 statButton.addEventListener("click", switchState);
 
-const shareButton = document.getElementById("share-button");
-shareButton.addEventListener("click", copyStats);
-
 //User stats object
 const userStats = JSON.parse(localStorage.getItem("stats")) || {
   numGames: 0,
@@ -84,6 +81,9 @@ function fetchGameData(gameNumber) {
 function initializeGame() {
   //Reset game state and track new game if user last played on a previous day
   if (gameState.gameNumber !== gameNumber) {
+    if (gameState.hasWon === false) {
+      userStats.currentStreak = 0;
+    }
     gameState.gameNumber = gameNumber;
     gameState.guesses = [];
     gameState.hasWon = false;
@@ -100,11 +100,19 @@ function initializeGame() {
   if (gameState.guesses.length < 6 && !gameState.hasWon) {
     addEventListeners();
   } else {
-    buttonInput.setAttribute("disabled", "");
-    buttonInput.classList.remove("active");
-    input.setAttribute("disabled", "");
-    input.setAttribute("placeholder", "Game Over!");
+    convertToShareButton();
   }
+}
+
+function convertToShareButton() {
+  const containerElem = document.getElementById("input-container");
+  const shareButtonElem = document.createElement("button");
+  shareButtonElem.setAttribute("id", "share-button");
+  containerElem.innerHTML = "";
+  shareButtonElem.innerHTML = `Share
+  <img src="./assets/share-icon.svg" class="share-icon" />`;
+  shareButtonElem.addEventListener("click", copyStats);
+  containerElem.appendChild(shareButtonElem);
 }
 
 function displayProductCard() {
@@ -165,7 +173,7 @@ function buttonEventListener() {
 function handleInput() {
   const strippedString = input.value.replaceAll(",", "");
   const guess = Number(strippedString).toFixed(2);
-  console.log(guess);
+
   if (isNaN(guess) || !strippedString) {
     displayWarning();
     return;
@@ -225,15 +233,37 @@ function copyStats() {
     output += `\n`;
   });
 
-  output += `https://costcodle.com`;
-  navigator.clipboard.writeText(output);
+  const isMobile =
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i) ||
+    navigator.userAgent.match(/IEMobile/i) ||
+    navigator.userAgent.match(/Opera Mini/i);
 
-  displayToast();
+  if (isMobile) {
+    if (navigator.canShare) {
+      navigator
+        .share({
+          title: "COSTCODLE",
+          text: output,
+          url: "https://costcodle.com",
+        })
+        .catch((error) => console.error("Share failed:", error));
+    }
+  } else {
+    output += `https://costcodle.com`;
+    navigator.clipboard.writeText(output);
+    displayToast();
+  }
 
   function displayToast() {
     clearTimeout(toastTimeout);
 
-    const toastElem = document.getElementById("stats-toast");
+    const toastElem = document.getElementById("share-toast");
     toastElem.classList.remove("hide");
     toastElem.classList.add("animate__flipInX");
 
@@ -367,13 +397,16 @@ function gameWon() {
   localStorage.setItem("state", JSON.stringify(gameState));
   localStorage.setItem("stats", JSON.stringify(userStats));
   removeEventListeners();
+  convertToShareButton();
 }
 
 function gameLost() {
   userStats.currentStreak = 0;
 
   localStorage.setItem("stats", JSON.stringify(userStats));
+
   removeEventListeners();
+  convertToShareButton();
 }
 
 /*
