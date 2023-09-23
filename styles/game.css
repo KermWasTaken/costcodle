@@ -236,6 +236,7 @@
 #share-toast {
   position: absolute;
   top: 16px;
+  z-index: 1;
 
   width: 300px;
   padding: 18px;
