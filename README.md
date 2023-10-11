@@ -10,8 +10,8 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 <div align="center">
-  [![MIT License][license-shield]][license-url]
-  [![LinkedIn][linkedin-shield]][linkedin-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 </div>
 
 
@@ -79,9 +79,9 @@ A new COSTCODLE is available every day!
 
 ### Built With
 
-* [![HTML][HTML5]]
-* [![CSS][CSS3]]
-* [![JS][JavaScript]]
+* [![HTML][HTML5]](https://en.wikipedia.org/wiki/HTML)
+* [![CSS][CSS3]](https://en.wikipedia.org/wiki/CSS)
+* [![JS][JavaScript]](https://en.wikipedia.org/wiki/JavaScript)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
