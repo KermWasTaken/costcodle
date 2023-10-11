@@ -109,5 +109,3 @@ This project would not have been possible without the following resources:
 [CSS-url]: https://en.wikipedia.org/wiki/CSS
 [JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
 [JavaScript-url]: https://en.wikipedia.org/wiki/JavaScript
-
-<script src='https://cdn.jsdelivr.net/gh/eddymens/markdown-external-link-script@v2.0.0/main.min.js'></script>
