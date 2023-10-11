@@ -1,20 +1,4 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-<div align="center">
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-</div>
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -37,9 +21,11 @@
     ·
     <a href="https://github.com/KermWasTaken/costcodle/issues">Request Feature</a>
   </p>
+  
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -57,8 +43,6 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -75,13 +59,11 @@ A new COSTCODLE is available every day!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
 
-* [![HTML][HTML5]](https://en.wikipedia.org/wiki/HTML)
-* [![CSS][CSS3]](https://en.wikipedia.org/wiki/CSS)
-* [![JS][JavaScript]](https://en.wikipedia.org/wiki/JavaScript)
+* [![HTML][HTML5]][HTML-url]
+* [![CSS][CSS3]][CSS-url]
+* [![JS][JavaScript]][JavaScript-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -92,8 +74,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -102,8 +82,6 @@ Zachary Kermitz  - zakkermitz@gmail.com
 Project Link: [https://github.com/KermWasTaken/costcodle](https://github.com/KermWasTaken/costcodle)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
@@ -117,7 +95,6 @@ This project would not have been possible without the following resources:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/KermWasTaken/costcodle.svg?style=for-the-badge
@@ -126,5 +103,8 @@ This project would not have been possible without the following resources:
 [linkedin-url]: https://linkedin.com/in/zacharykermitz
 [product-screenshot]: assets/costcodle.png
 [HTML5]: https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white
+[HTML-url]: https://en.wikipedia.org/wiki/HTML
 [CSS3]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
+[CSS-url]: https://en.wikipedia.org/wiki/CSS
 [JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+[JavaScript-url]: https://en.wikipedia.org/wiki/JavaScript
