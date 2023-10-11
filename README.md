@@ -88,6 +88,7 @@ Project Link: [https://github.com/KermWasTaken/costcodle](https://github.com/Ker
 
 This project would not have been possible without the following resources:
 
+* [Costco Food Database](https://costcofdb.com/food-database)
 * [Wordle](https://www.nytimes.com/games/wordle/index.html)
 * [Tradle](https://oec.world/en/tradle/)
 * [Currency Format Input Field by Wade Williams](https://codepen.io/559wade/pen/LRzEjj)
@@ -98,7 +99,7 @@ This project would not have been possible without the following resources:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/KermWasTaken/costcodle.svg?style=for-the-badge
-[license-url]: https://github.com/KermWasTaken/costcodle/blob/master/LICENSE.txt
+[license-url]: https://github.com/KermWasTaken/costcodle/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/zacharykermitz
 [product-screenshot]: assets/costcodle.png
@@ -108,3 +109,5 @@ This project would not have been possible without the following resources:
 [CSS-url]: https://en.wikipedia.org/wiki/CSS
 [JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
 [JavaScript-url]: https://en.wikipedia.org/wiki/JavaScript
+
+<script src='https://cdn.jsdelivr.net/gh/eddymens/markdown-external-link-script@v2.0.0/main.min.js'></script>
