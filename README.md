@@ -34,7 +34,7 @@
     <img src="assets/CD.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center" style="color: rgb(227, 42, 54)">Costco<span sytle="color: rgb(0, 96, 169)">dle</span></h3>
+<h3 align="center" style="color: #e32a36;">Costco<span sytle="color: rgb(0, 96, 169);">dle</span></h3>
 
   <p align="center">
     project_description
