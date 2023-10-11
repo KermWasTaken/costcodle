@@ -99,7 +99,7 @@ This project would not have been possible without the following resources:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/KermWasTaken/costcodle.svg?style=for-the-badge
-[license-url]: https://github.com/KermWasTaken/costcodle/LICENSE.txt
+[license-url]: https://github.com/KermWasTaken/costcodle/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/zacharykermitz
 [product-screenshot]: assets/costcodle.png
