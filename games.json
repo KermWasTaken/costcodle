@@ -530,14 +530,14 @@
     "image": "https://costcofdb.com/wp-content/uploads/2022/01/kirkland-signature-shrimp-tray-with-cocktail-sauce-lemon-300x300.jpg"
   },
   "game-107": {
+    "name": "SkinnyPop Popcorn, 28 x .65 oz",
+    "price": "$12.99",
+    "image": "https://costcofdb.com/wp-content/uploads/2022/01/skinnypop-popcorn-28-x-65-oz-300x300.jpg"
+  },
+  "game-108": {
     "name": "Kirkland Signature Chicken Salad Made with Rotisserie Chicken",
     "price": "$11.99",
     "image": "https://costcofdb.com/wp-content/uploads/2022/01/kirkland-signature-chicken-salad-made-with-rotisserie-chicken-300x300.jpg"
-  },
-  "game-108": {
-    "name": "Johnny\u2019s Seasoning Salt, 42 oz",
-    "price": "$5.99",
-    "image": "https://costcofdb.com/wp-content/uploads/2022/01/johnnys-seasoning-salt-42-oz-300x300.jpg"
   },
   "game-109": {
     "name": "Galbani Whole Milk String Cheese, 60 X 1 oz",
@@ -2500,9 +2500,9 @@
     "image": "https://costcofdb.com/wp-content/uploads/2022/01/kirkland-signature-basmati-rice-20-lb-2-300x300.jpg"
   },
   "game-501": {
-    "name": "SkinnyPop Popcorn, 28 x .65 oz",
-    "price": "$12.99",
-    "image": "https://costcofdb.com/wp-content/uploads/2022/01/skinnypop-popcorn-28-x-65-oz-300x300.jpg"
+    "name": "Johnny\u2019s Seasoning Salt, 42 oz",
+    "price": "$5.99",
+    "image": "https://costcofdb.com/wp-content/uploads/2022/01/johnnys-seasoning-salt-42-oz-300x300.jpg"
   },
   "game-502": {
     "name": "Kirkland Signature USDA Prime Beef Ribeye Steak Boneless",
