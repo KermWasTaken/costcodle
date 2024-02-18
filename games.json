@@ -755,14 +755,14 @@
     "image": "https://costcofdb.com/wp-content/uploads/2022/01/kevins-cilantro-lime-chicken-32-oz-2lbs-1-300x300.jpg"
   },
   "game-152": {
-    "name": "Dittmann Stuffed Pepper Duo, 33.51 oz",
-    "price": "$7.99",
-    "image": "https://costcofdb.com/wp-content/uploads/2022/01/dittmann-stuffed-pepper-duo-33-51-oz-1-300x300.jpg"
-  },
-  "game-153": {
     "name": "Kirkland Signature Chicken Street Tacos, 12 ct",
     "price": "$13.49",
     "image": "https://costcofdb.com/wp-content/uploads/2022/01/kirkland-signature-chicken-street-tacos-12-ct-300x300.jpg"
+  },
+  "game-153": {
+    "name": "Dittmann Stuffed Pepper Duo, 33.51 oz",
+    "price": "$7.99",
+    "image": "https://costcofdb.com/wp-content/uploads/2022/01/dittmann-stuffed-pepper-duo-33-51-oz-1-300x300.jpg"
   },
   "game-154": {
     "name": "Cacique Crema Mexicana, 2 X 15 oz",
