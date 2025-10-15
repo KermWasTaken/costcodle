@@ -510,5 +510,6 @@ function getGameNumber() {
   let timeDifference = currDate.getTime() - costcodleStartDate.getTime();
   let dayDifference = timeDifference / (1000 * 3600 * 24);
 
-  return Math.ceil(dayDifference);
+  return Math.ceil(dayDifference) + 1;
 }
+
