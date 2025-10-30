@@ -17,7 +17,7 @@ let warningTimeout;
 */
 
 //The day Costcodle was launched. Used to find game number each day
-const costcodleStartDate = new Date("09/21/2023");
+const costcodleStartDate = new Date(Date.UTC(2023, 8, 21));
 const gameNumber = getGameNumber();
 
 //Elements with event listeners to play the game
