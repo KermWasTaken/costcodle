@@ -308,13 +308,14 @@ function checkGuess(guess) {
   const guessObj = { guess, closeness: "", direction: "" };
 
   const percentAway = calculatePercent(guess);
+  const priceDifference = Math.abs(guess - productPrice);
 
-  if (Math.abs(percentAway) <= 5) {
+  if (priceDifference <= 0.51 || percentAway <= 5) {
     guessObj.closeness = "guess-win";
     gameState.hasWon = true;
   } else {
     shakeBox();
-    if (Math.abs(percentAway) <= 25) {
+    if (percentAway <= 25) {
       guessObj.closeness = "guess-near";
     } else {
       guessObj.closeness = "guess-far";
@@ -323,7 +324,7 @@ function checkGuess(guess) {
 
   if (gameState.hasWon) {
     guessObj.direction = "&check;";
-  } else if (percentAway < 0) {
+  } else if (guess < productPrice) {
     guessObj.direction = "&uarr;";
   } else {
     guessObj.direction = "&darr;";
@@ -378,7 +379,7 @@ function displayGuess(guess, index = gameState.guesses.length) {
 */
 
 function calculatePercent(guess) {
-  return ((guess * 100) / (productPrice * 100)) * 100 - 100;
+  return Math.abs(((guess - productPrice) / productPrice) * 100);
 }
 
 /* 
