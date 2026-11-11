@@ -1,0 +1,308 @@
+/*
+  Classic mode in the Checkout shell.
+  Production board proportions, but height-aware of header + mode tabs + footer.
+*/
+
+.hide {
+  display: none;
+}
+
+.transparent-background {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+*:focus,
+*:focus-visible {
+  outline: none;
+}
+
+#guess-input,
+.guess-input {
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#guess-input:focus,
+#guess-input:focus-visible,
+.guess-input:focus,
+.guess-input:focus-visible,
+#text-input-container:focus-within,
+.text-input:focus-within {
+  outline: none;
+  box-shadow: none;
+}
+
+.view[data-mode="classic"][data-view="game"] {
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  padding-inline: 8px;
+}
+
+.view[data-mode="classic"][data-view="about"],
+.view[data-mode="classic"][data-view="stats"],
+.view[data-mode="classic"][data-view="archive"] {
+  flex: 1 1 auto;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 0;
+  /* Scroll only on inner panels / archive list — never this view chrome. */
+  overflow: hidden;
+  padding-inline: 8px;
+}
+
+/*
+  Shell chrome vs production: header row + mode tabs + footer.
+  Everything else in the board (card chrome, name, stats, guesses) is budgeted
+  so the product image is what flexes first.
+*/
+body[data-game-mode="classic"] {
+  /* Safety pad so two-line product names / font metrics never spill under the footer. */
+  --classic-chrome: calc(var(--header-h) + var(--tab-h) + var(--footer-h) + 16px);
+  --classic-card-mt: 24px;
+  --classic-card-mb: 14px;
+  --classic-card-pad: 12px;
+  --classic-stats-mb: 8px;
+  --classic-guesses-h: 275px;
+  /* Card pad×2 + image mb + name (2-line budget) + card mb + stats + guesses */
+  --classic-stack: calc(
+    var(--classic-card-mt) + (var(--classic-card-pad) * 2) + 10px + 52px +
+      var(--classic-card-mb) + 30px + var(--classic-stats-mb) +
+      var(--classic-guesses-h)
+  );
+  --classic-img: clamp(
+    96px,
+    calc(100dvh - var(--classic-chrome) - var(--classic-stack)),
+    300px
+  );
+}
+
+#game-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 360px;
+  max-height: calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h));
+  overflow: hidden;
+  background-color: transparent;
+}
+
+#title.info-title,
+#title.small {
+  font-size: var(--title-small);
+}
+
+body[data-game-mode="classic"] #info-card {
+  margin-top: var(--classic-card-mt);
+  margin-bottom: var(--classic-card-mb);
+  padding: var(--classic-card-pad);
+}
+
+body[data-game-mode="classic"] #image-container {
+  width: var(--classic-img);
+  height: var(--classic-img);
+  margin-bottom: 10px;
+}
+
+body[data-game-mode="classic"] #product-image {
+  height: 100%;
+}
+
+body[data-game-mode="classic"] #product-info {
+  width: var(--classic-img);
+  font-size: clamp(16px, calc(var(--classic-img) * 0.08), 24px);
+}
+
+body[data-game-mode="classic"] #game-stats {
+  margin-bottom: var(--classic-stats-mb);
+  font-size: clamp(16px, 2.2vh, 24px);
+}
+
+body[data-game-mode="classic"] #guesses-container {
+  width: min(324px, 100%);
+  height: var(--classic-guesses-h);
+  padding: 3px;
+}
+
+/*
+  Production input proportions, pinned height so $ / field / SUBMIT never clip.
+*/
+body[data-game-mode="classic"] #input-container {
+  flex: 0 0 42px;
+  height: 42px;
+  max-height: 42px;
+  margin-bottom: 0;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-game-mode="classic"] #text-input-container {
+  flex: 2;
+  align-self: center;
+  height: 40px;
+  font-size: 28px;
+}
+
+body[data-game-mode="classic"] #button-container {
+  flex: 1;
+  align-self: center;
+  height: 40px;
+  margin-left: 5px;
+  font-size: 28px;
+}
+
+body[data-game-mode="classic"] #input-label {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  height: 100%;
+  border-right: 2px solid black;
+  background-color: rgb(173, 173, 173);
+}
+
+body[data-game-mode="classic"] #guess-input {
+  width: 180px;
+  height: 100%;
+  padding-left: 6px;
+  font-size: 24px;
+}
+
+body[data-game-mode="classic"] #guess-input::placeholder {
+  font-size: 24px;
+}
+
+body[data-game-mode="classic"] #guess-button {
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+}
+
+body[data-game-mode="classic"] .guess-value-container,
+body[data-game-mode="classic"] .guess-direction-container {
+  font-size: clamp(20px, 2.6vh, 28px);
+}
+
+body[data-game-mode="classic"] #share-button {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Tighter vertical budget once the image is already near its floor. */
+@media (max-height: 820px) {
+  body[data-game-mode="classic"] {
+    --classic-card-mt: 16px;
+    --classic-card-mb: 10px;
+    --classic-card-pad: 8px;
+    --classic-stats-mb: 6px;
+    --classic-guesses-h: 250px;
+  }
+}
+
+@media (max-height: 720px) {
+  body[data-game-mode="classic"] {
+    --classic-card-mt: 10px;
+    --classic-card-mb: 8px;
+    --classic-guesses-h: 230px;
+  }
+
+  body[data-game-mode="classic"] #guess-input::placeholder {
+    font-size: 20px;
+  }
+}
+
+@media (max-height: 640px) {
+  body[data-game-mode="classic"] {
+    --classic-card-mt: 6px;
+    --classic-card-mb: 6px;
+    --classic-card-pad: 6px;
+    --classic-guesses-h: 210px;
+  }
+
+  body[data-game-mode="classic"] #text-input-container,
+  body[data-game-mode="classic"] #button-container {
+    font-size: 22px;
+    height: 36px;
+  }
+
+  body[data-game-mode="classic"] #input-container {
+    flex-basis: 38px;
+    height: 38px;
+    max-height: 38px;
+  }
+
+  body[data-game-mode="classic"] #guess-input {
+    font-size: 20px;
+  }
+
+  body[data-game-mode="classic"] #guess-button {
+    font-size: 20px;
+  }
+}
+
+/* Narrow phones: keep row proportions, let the field flex inside the $ strip. */
+@media (max-width: 360px) {
+  body[data-game-mode="classic"] #game-container {
+    max-width: 100%;
+  }
+
+  body[data-game-mode="classic"] #guesses-container {
+    width: min(324px, calc(100vw - 16px));
+  }
+
+  body[data-game-mode="classic"] #guess-input {
+    width: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body[data-game-mode="classic"] #text-input-container {
+    display: flex;
+  }
+
+  body[data-game-mode="classic"] #guess-input::placeholder {
+    font-size: 16px;
+  }
+}
+
+.classic-panel {
+  box-sizing: border-box;
+  width: min(100%, 360px);
+  max-height: calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h) - 24px);
+  /* Keep copy clear of the overlay scrollbar on the right edge. */
+  padding-right: 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.classic-example {
+  width: 100%;
+  max-width: 320px;
+  height: 42px;
+  margin: 8px 0;
+}
+
+.classic-stats-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 360px);
+  max-height: calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h) - 24px);
+  margin-top: var(--board-top);
+  margin-bottom: var(--board-top);
+  padding: 8px 6px 16px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background-color: gainsboro;
+}
