@@ -1,0 +1,1957 @@
+
+      /* Palette and sizes copied from styles/*.css so the mockup matches the live game. */
+      :root {
+        --gainsboro: #dcdcdc;
+        --card: rgb(173, 173, 173);
+        --input: rgb(94, 94, 94);
+        --red: rgb(227, 42, 54);
+        --blue: rgb(0, 96, 169);
+        --paper: #f7f4ec;
+        --ink: #34333a;
+        --ink-soft: #6f6c66;
+        --ink-faint: #a8a49a;
+
+        /*
+          Scale tokens:
+          --p  = whole-number Aseprite pixel size (keeps pixel art crisp)
+          --ui = UI multiplier for fonts, paddings, and chrome
+          Default matches today's Costcodle. Larger monitors step up together.
+        */
+        --p: 4;
+        --ui: 1;
+        --px: calc(var(--p) * 1px);
+        --col1-max: calc(81 * var(--px));
+        --col2: calc(48 * var(--px));
+        --gap: calc(6 * var(--px));
+        --board-max: calc(var(--col1-max) + var(--gap) + var(--col2));
+        --board-top: calc(20px * var(--ui));
+        --card-pad: calc(12px * var(--ui));
+        --name-size: calc(24px * var(--ui));
+        --status-h: calc(40px * var(--ui));
+        --input-h: calc(46px * var(--ui));
+        --rcpt-font: calc(18px * var(--ui));
+        --rcpt-line: calc(20px * var(--ui));
+        --lcd-font: calc(18px * var(--ui));
+        --body-font: calc(30px * var(--ui));
+        --title-font: calc(60px * var(--ui));
+        --title-small: calc(52px * var(--ui));
+        --header-h: calc(62px * var(--ui));
+        --tab-h: calc(30px * var(--ui));
+        --tab-font: calc(22px * var(--ui));
+        --hdr-btn: calc(38px * var(--ui));
+        --hdr-btn-h: calc(44px * var(--ui));
+        --hdr-icon: calc(24px * var(--ui));
+        --hdr-group: calc(80px * var(--ui));
+        --hdr-q: calc(50px * var(--ui));
+        --footer-h: calc(36px * var(--ui));
+        --footer-font: calc(26px * var(--ui));
+        /* Vertical space taken by everything except the product image. */
+        --chrome: calc(448px * var(--ui));
+        --chrome-classic: calc(676px * var(--ui));
+      }
+
+      /* Large desktop / 1440p-ish widths: ~1.25× board. */
+      @media (min-width: 1500px) and (min-height: 900px) {
+        :root {
+          --p: 5;
+          --ui: 1.25;
+        }
+      }
+
+      /* Wide 1440p and up: ~1.5× board. */
+      @media (min-width: 1900px) and (min-height: 1050px) {
+        :root {
+          --p: 6;
+          --ui: 1.5;
+        }
+      }
+
+      /* Short laptop screens: tighten vertical margins so the page doesn't scroll. */
+      @media (max-height: 700px) {
+        :root {
+          --board-top: 16px;
+        }
+      }
+
+      @media (max-width: 559px) {
+        :root {
+          --p: 2;
+          --ui: 1;
+          /* On phones the play column flexes to fill width; only the printer stays art-sized. */
+          --col1-max: 1000px;
+          --gap: 10px;
+          --board-max: 100%;
+          --board-top: 12px;
+          --card-pad: 8px;
+          --name-size: 20px;
+          --status-h: 32px;
+          --input-h: 44px;
+          --rcpt-font: 16px;
+          --rcpt-line: 17px;
+          --lcd-font: 16px;
+          --body-font: 30px;
+          --title-font: 46px;
+          --title-small: 40px;
+          --header-h: 54px;
+          --tab-h: 28px;
+          --tab-font: 20px;
+          --hdr-btn: 34px;
+          --hdr-btn-h: 44px;
+          --hdr-icon: 24px;
+          --hdr-group: 72px;
+          --hdr-q: 42px;
+          --footer-h: 32px;
+          --footer-font: 22px;
+          --chrome: 394px;
+          --chrome-classic: 636px;
+        }
+
+        #board {
+          width: 100%;
+          grid-template-columns: minmax(0, 1fr) var(--col2);
+        }
+
+        #header-row {
+          width: 100%;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      *:focus,
+      *:focus-visible {
+        outline: none;
+      }
+
+      body {
+        font-family: "VT323", monospace;
+        font-size: var(--body-font);
+        color: black;
+        background: var(--gainsboro);
+      }
+
+      button,
+      input {
+        font-family: inherit;
+      }
+
+      input {
+        border-radius: 0;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .costco-red {
+        color: var(--red);
+      }
+
+      .costco-blue {
+        color: var(--blue);
+      }
+
+      #page {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow: hidden;
+      }
+
+      /* ---------- Header ---------- */
+
+      #site-header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 8px;
+        background: var(--gainsboro);
+      }
+
+      #header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(100%, var(--board-max));
+        height: var(--header-h);
+        border-bottom: 2px solid gray;
+      }
+
+      .hdr-group {
+        display: flex;
+        gap: 2px;
+        width: var(--hdr-group);
+      }
+
+      .hdr-group.right {
+        justify-content: flex-end;
+      }
+
+      .hdr-btn {
+        display: grid;
+        place-items: center;
+        width: var(--hdr-btn);
+        height: var(--hdr-btn-h);
+        font-size: var(--hdr-q);
+        line-height: 1;
+        color: black;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      .hdr-btn svg,
+      .hdr-btn img {
+        width: var(--hdr-icon);
+        height: var(--hdr-icon);
+      }
+
+      .hdr-btn[aria-pressed="true"] {
+        color: var(--blue);
+      }
+
+      #title {
+        font-size: var(--title-font);
+        font-weight: normal;
+        line-height: 1;
+        white-space: nowrap;
+        color: var(--red);
+      }
+
+      #title.small {
+        font-size: var(--title-small);
+      }
+
+      #mode-tabs {
+        display: flex;
+        align-items: flex-end;
+        gap: calc(28px * var(--ui));
+        height: var(--tab-h);
+      }
+
+      .tab {
+        padding: 0 6px 1px;
+        font-size: var(--tab-font);
+        letter-spacing: 1px;
+        color: #6f6f6f;
+        border: none;
+        border-bottom: 2px solid transparent;
+        background: none;
+        cursor: pointer;
+      }
+
+      .tab[aria-selected="true"] {
+        color: var(--blue);
+        border-bottom-color: var(--blue);
+      }
+
+      /* ---------- Page grid ---------- */
+
+      #content {
+        flex: 1;
+        display: grid;
+        /* +16px leaves room for the view's horizontal padding without shrinking the board. */
+        grid-template-columns: minmax(0, calc(var(--board-max) + 16px));
+        justify-content: center;
+        justify-items: center;
+        align-items: stretch;
+        width: 100%;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      #center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(100%, calc(var(--board-max) + 16px));
+        min-width: 0;
+        min-height: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .view {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      /* Checkout game fills leftover height; the board itself stays content-sized and centered. */
+      .view[data-mode="checkout"][data-view="game"] {
+        flex: 1 1 auto;
+        align-items: center;
+        min-height: 0;
+        padding-inline: 8px;
+      }
+
+      .view[data-mode="checkout"][data-view="about"],
+      .view[data-mode="checkout"][data-view="stats"],
+      .view[data-mode="checkout"][data-view="archive"] {
+        flex: 1 1 auto;
+        align-items: flex-start;
+        min-height: 0;
+        /* Scroll only on inner panels / archive list — never this view chrome. */
+        overflow: hidden;
+        padding-inline: 8px;
+      }
+
+      /* ---------- Receipt board ---------- */
+
+      #board {
+        display: grid;
+        grid-template-columns: minmax(0, var(--col1-max)) var(--col2);
+        justify-content: center;
+        align-items: stretch;
+        column-gap: var(--gap);
+        width: min(100%, var(--board-max));
+        margin: var(--board-top) 0;
+      }
+
+      #col-play {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .info-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: var(--card-pad);
+        border-radius: 8px;
+        background: var(--card);
+        box-shadow: 0 3px 10px;
+      }
+
+      .image-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        aspect-ratio: 1;
+        max-height: max(130px, 100dvh - var(--chrome));
+        overflow: hidden;
+        border-radius: 8px;
+        background: white;
+      }
+
+      .product-image {
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
+
+      /* costcofdb.com refuses images to non-whitelisted sites such as localhost. */
+      .image-container.img-missing .product-image {
+        visibility: hidden;
+      }
+
+      .image-container.img-missing::after {
+        content: "PRODUCT PHOTO";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-size: 22px;
+        color: #9a9a9a;
+        background: repeating-linear-gradient(45deg, #f1f1f1 0 10px, #fff 10px 20px);
+      }
+
+      .product-info {
+        width: 100%;
+        min-height: 2em;
+        margin-top: 8px;
+        font-size: var(--name-size);
+        line-height: 1;
+        text-align: center;
+      }
+
+      .price-tag {
+        position: absolute;
+        z-index: 1;
+        right: 6px;
+        bottom: 6px;
+        padding: 3px 8px 5px;
+        line-height: 1;
+        text-align: right;
+        border: 3px solid #111;
+        background: white;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .price-tag .big {
+        font-size: calc(42px * var(--ui));
+      }
+
+      .price-tag .small {
+        font-size: calc(18px * var(--ui));
+        color: #555;
+      }
+
+      .price-tag .off {
+        color: var(--red);
+      }
+
+      #round-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--status-h);
+        padding: 0 4px;
+        font-size: calc(24px * var(--ui));
+      }
+
+      .pips {
+        display: flex;
+        gap: 5px;
+      }
+
+      .pip {
+        width: 12px;
+        height: 12px;
+        background: #b9b9b9;
+        box-shadow: inset 0 0 0 2px #8f8f8f;
+      }
+
+      button.pip {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      button.pip:focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+      }
+
+      .pip.done {
+        background: var(--blue);
+        box-shadow: none;
+      }
+
+      .pip.current {
+        background: none;
+        box-shadow: inset 0 0 0 2px var(--red);
+      }
+
+      .pip.viewing {
+        background: var(--blue);
+        box-shadow: inset 0 0 0 2px var(--red);
+      }
+
+      .input-row {
+        display: flex;
+        width: 100%;
+        height: var(--input-h);
+      }
+
+      .text-input {
+        display: flex;
+        flex: 2;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid black;
+        border-radius: 8px;
+        background: gray;
+      }
+
+      .input-label {
+        display: flex;
+        flex: 0 0 calc(40px * var(--ui));
+        align-items: center;
+        justify-content: center;
+        font-size: calc(28px * var(--ui));
+        border-right: 2px solid black;
+        background: var(--card);
+      }
+
+      .guess-input {
+        flex: 1;
+        min-width: 0;
+        padding-left: 6px;
+        font-size: calc(24px * var(--ui));
+        color: gainsboro;
+        border: none;
+        border-radius: 0;
+        background: var(--input);
+        outline: none;
+        box-shadow: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .guess-input:focus,
+      .guess-input:focus-visible {
+        outline: none;
+        box-shadow: none;
+      }
+
+      .text-input:focus-within {
+        outline: none;
+      }
+
+      .guess-input::placeholder {
+        color: gainsboro;
+      }
+
+      .guess-input:disabled {
+        opacity: 0.75;
+      }
+
+      .button-wrap {
+        flex: 1;
+        max-width: 110px;
+        margin-left: 5px;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: inset 0 0 5px;
+      }
+
+      .guess-button {
+        width: 100%;
+        height: 100%;
+        font-size: calc(24px * var(--ui));
+        color: var(--red);
+        border: none;
+        background: var(--card);
+        cursor: pointer;
+      }
+
+      .guess-button:disabled {
+        color: #777;
+        cursor: default;
+      }
+
+      .pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        height: 100%;
+        min-height: calc(44px * var(--ui));
+        font-size: calc(26px * var(--ui));
+        color: white;
+        border: none;
+        border-radius: 32px;
+        background: var(--red);
+        cursor: pointer;
+      }
+
+      .pill:hover {
+        background: rgba(227, 42, 54, 0.8);
+      }
+
+      .pill img {
+        height: 26px;
+      }
+
+      .guess-button:not(:disabled):hover {
+        cursor: pointer;
+        background: rgba(0, 96, 169, 0.5);
+      }
+
+      /* ---------- Printer column ---------- */
+
+      /* Stretches to the play column height so the printer bottom lines up with the input. */
+      #col-printer {
+        position: relative;
+        align-self: stretch;
+        min-height: calc(24 * var(--px));
+      }
+
+      #printer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: calc(48 * var(--px));
+        height: calc(24 * var(--px));
+      }
+
+      /* The paper is sandwiched between these two layers so it appears to come out of the slot. */
+      .printer-layer {
+        position: absolute;
+        inset: 0;
+      }
+
+      .printer-layer svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      #printer-back {
+        z-index: 4;
+      }
+
+      #printer-front {
+        z-index: 6;
+      }
+
+      #lcd {
+        position: absolute;
+        z-index: 7;
+        left: calc(5 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(26 * var(--px));
+        height: calc(10 * var(--px));
+        padding: 1px var(--px) 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        font-size: var(--lcd-font);
+        line-height: 1;
+        white-space: nowrap;
+        color: #1e2b17;
+      }
+
+      #lcd-round {
+        font-size: 0.72em;
+        letter-spacing: 0.04em;
+        opacity: 0.75;
+      }
+
+      #lcd-sum {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.25em;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      #lcd-label {
+        flex: none;
+        font-size: 0.72em;
+        letter-spacing: 0.04em;
+        opacity: 0.75;
+      }
+
+      #lcd-total {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin-left: auto;
+        overflow: hidden;
+        text-align: right;
+        text-overflow: clip;
+        font-variant-numeric: tabular-nums;
+      }
+
+      #printer-led {
+        position: absolute;
+        z-index: 8;
+        left: calc(36 * var(--px));
+        top: calc(16 * var(--px));
+        width: calc(2 * var(--px));
+        height: calc(2 * var(--px));
+        background: #6be06b;
+        box-shadow: 0 0 calc(0.6 * var(--px)) rgba(107, 224, 107, 0.55);
+        pointer-events: none;
+      }
+
+      #printer.is-printing {
+        animation: printer-shake 0.22s steps(2, end) infinite;
+        transform-origin: 50% 100%;
+      }
+
+      #printer.is-tearing {
+        animation: printer-tear-yank 0.28s steps(2, end);
+        transform-origin: 50% 100%;
+      }
+
+      @keyframes printer-tear-yank {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        35% {
+          transform: translate(-1.5px, 1px) rotate(-1.1deg);
+        }
+        70% {
+          transform: translate(1.2px, -0.5px) rotate(0.8deg);
+        }
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+      }
+
+      /* Torn-off stub left in the slot while the flyer becomes the modal. */
+      #paper.is-torn {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #printer.is-printing #printer-led {
+        animation: printer-led-flicker 0.18s steps(2, end) infinite;
+      }
+
+      /* Tiny cartoon rattle — body only; paper is a sibling so it keeps feeding straight. */
+      @keyframes printer-shake {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        20% {
+          transform: translate(0.6px, -0.4px) rotate(-0.35deg);
+        }
+        40% {
+          transform: translate(-0.7px, 0.3px) rotate(0.4deg);
+        }
+        60% {
+          transform: translate(0.5px, 0.5px) rotate(-0.25deg);
+        }
+        80% {
+          transform: translate(-0.4px, -0.3px) rotate(0.3deg);
+        }
+      }
+
+      @keyframes printer-led-flicker {
+        0%,
+        100% {
+          opacity: 1;
+          filter: brightness(1.15);
+        }
+        40% {
+          opacity: 0.35;
+          filter: brightness(0.7);
+        }
+        70% {
+          opacity: 0.85;
+          filter: brightness(1.35);
+        }
+      }
+
+      @media (max-width: 559px) {
+        /* 26×10 art cells at --p:2 → 52×20px. One money line fits; label + amount does not. */
+        #lcd {
+          padding: 0 1px;
+          font-size: 12px;
+          justify-content: space-evenly;
+        }
+
+        #lcd-round {
+          font-size: 0.68em;
+        }
+
+        #lcd-sum {
+          flex-direction: row;
+          align-items: center;
+          gap: 0;
+        }
+
+        #lcd-label {
+          display: none;
+        }
+
+        #lcd-total {
+          margin-left: 0;
+          width: 100%;
+          font-size: 1em;
+          letter-spacing: -0.03em;
+        }
+      }
+
+      #paper {
+        position: absolute;
+        z-index: 5;
+        left: calc(4 * var(--px));
+        bottom: calc(20 * var(--px));
+        width: calc(40 * var(--px));
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        /* Shadow lives on the rectangular sheet only. A drop-shadow on the
+           whole paper hugs the zigzag alpha and can look like a 1px outline. */
+        /* Default print pace; JS overrides duration per feed length. */
+        transition: height 1.8s steps(32, end);
+      }
+
+      /*
+        When the roll scrolls past the board top, dissolve the cut edge into the
+        page so it reads as "endless receipt" rather than a clipped bug.
+      */
+      #paper.is-overflowing::before {
+        content: "";
+        position: absolute;
+        z-index: 3;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: calc(12 * var(--px));
+        pointer-events: none;
+        background: linear-gradient(
+          to bottom,
+          var(--gainsboro) 0%,
+          rgba(220, 220, 220, 0.92) 28%,
+          rgba(220, 220, 220, 0.45) 62%,
+          rgba(220, 220, 220, 0) 100%
+        );
+      }
+
+      .r-roll {
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        /* Soft silhouette shadow so it continues through the zigzag edges. */
+        filter: drop-shadow(calc(0.5 * var(--px)) 0 calc(0.5 * var(--px)) rgba(0, 0, 0, 0.18));
+        will-change: transform;
+      }
+
+      .r-edge {
+        flex: none;
+        height: calc(2 * var(--px));
+        background-repeat: repeat-x;
+        background-size: calc(4 * var(--px)) calc(2 * var(--px));
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+      }
+
+      .r-edge-top {
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'><rect x='1' y='0' width='2' height='1' fill='%23f7f4ec'/><rect x='0' y='1' width='4' height='1' fill='%23f7f4ec'/></svg>");
+      }
+
+      .r-edge-bottom {
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='2' shape-rendering='crispEdges'><rect x='0' y='0' width='4' height='1' fill='%23f7f4ec'/><rect x='1' y='1' width='2' height='1' fill='%23f7f4ec'/></svg>");
+      }
+
+      .r-sheet {
+        font-size: var(--rcpt-font);
+        line-height: var(--rcpt-line);
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      .r-stub {
+        padding: 2px calc(2 * var(--px)) 0;
+        text-align: center;
+      }
+
+      .r-logo {
+        font-size: calc(var(--rcpt-font) * 1.35);
+        line-height: 1;
+        letter-spacing: 1px;
+        color: var(--red);
+      }
+
+      .r-logo span {
+        color: var(--blue);
+      }
+
+      .r-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: calc(var(--rcpt-font) * 0.85);
+        line-height: 1.1;
+        color: var(--ink-soft);
+      }
+
+      .r-dash {
+        height: 2px;
+        margin: 3px calc(2 * var(--px));
+        background: repeating-linear-gradient(
+          to right,
+          var(--ink-faint) 0 4px,
+          transparent 4px 8px
+        );
+      }
+
+      .r-line {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35em;
+        padding: 0 calc(2 * var(--px));
+        white-space: nowrap;
+      }
+
+      .r-line .n,
+      .r-line .amt {
+        flex: none;
+      }
+
+      .r-line .name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+
+      .r-line .lead {
+        display: none;
+        flex: 1;
+        min-width: 4px;
+        border-bottom: 2px dotted var(--ink-faint);
+      }
+
+      .r-total {
+        font-size: calc(var(--rcpt-font) * 1.15);
+      }
+
+      .r-total .lead {
+        display: block;
+      }
+
+      .lbl-short {
+        display: none;
+      }
+
+      @media (max-width: 559px) {
+        .r-logo {
+          font-size: calc(var(--rcpt-font) * 1.1);
+        }
+
+        .r-line {
+          gap: 0.25em;
+        }
+
+        .r-total {
+          font-size: var(--rcpt-font);
+        }
+
+        .r-line .name,
+        .lbl-long {
+          display: none;
+        }
+
+        .r-line .lead,
+        .lbl-short {
+          display: block;
+        }
+
+        .r-meta {
+          justify-content: center;
+        }
+
+        .r-meta span + span {
+          display: none;
+        }
+      }
+
+      /* Blank paper fed after each miss, with a margin tick every $2.50 of total error. */
+      .r-feed {
+        position: relative;
+        flex: none;
+      }
+
+      .r-feed::before,
+      .r-feed::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: calc(2 * var(--px));
+        background-image: linear-gradient(
+          to bottom,
+          transparent calc(var(--period, 100px) - 2px),
+          var(--ink-faint) 0
+        );
+        background-size: 100% var(--period, 100px);
+        background-position: left 0 bottom var(--shift, 0px);
+      }
+
+      .r-feed::before {
+        left: 0;
+      }
+
+      .r-feed::after {
+        right: 0;
+      }
+
+      .r-feed .mark {
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-size: calc(var(--rcpt-font) * 0.8);
+        line-height: 1;
+        text-align: center;
+        color: var(--ink-faint);
+        transform: translateY(50%);
+      }
+
+      .r-segs {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .r-seg {
+        flex: none;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 1px calc(2 * var(--px)) 0;
+        font-size: calc(var(--rcpt-font) * 0.85);
+        line-height: 1;
+        border-top: 2px dashed var(--ink-faint);
+      }
+
+      .r-seg.tight > * {
+        visibility: hidden;
+      }
+
+      #ruler {
+        position: absolute;
+        z-index: 5;
+        left: calc(-1 * var(--gap));
+        width: calc(var(--gap) + 4 * var(--px));
+        pointer-events: none;
+      }
+
+      #ruler::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 2px;
+        background: #9a9a9a;
+      }
+
+      .rt {
+        position: absolute;
+        right: 0;
+        width: 6px;
+        height: 2px;
+        background: #6f6f6f;
+        transform: translateY(50%);
+      }
+
+      .rt.major {
+        width: 11px;
+        background: #444;
+      }
+
+      .rt-label {
+        position: absolute;
+        right: 13px;
+        font-size: 15px;
+        line-height: 1;
+        color: #444;
+        transform: translateY(50%);
+      }
+
+      @media (max-width: 559px) {
+        .rt {
+          width: 4px;
+        }
+
+        .rt.major {
+          width: 7px;
+        }
+
+        .rt-label {
+          right: 8px;
+          font-size: 12px;
+        }
+
+        .rt-label.odd {
+          display: none;
+        }
+      }
+
+      .show-grid #printer::after,
+      .show-grid #paper::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 8;
+        pointer-events: none;
+        background-image: linear-gradient(
+            to right,
+            rgba(227, 42, 54, 0.35) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to bottom, rgba(227, 42, 54, 0.35) 1px, transparent 1px);
+        background-size: var(--px) var(--px);
+      }
+
+      @media (max-width: 559px) {
+        .price-tag {
+          padding: 2px 5px 3px;
+          border-width: 2px;
+        }
+
+        .price-tag .big {
+          font-size: 30px;
+        }
+
+        .price-tag .small {
+          font-size: 14px;
+        }
+
+        #round-status {
+          font-size: 20px;
+        }
+
+        .pip {
+          width: 10px;
+          height: 10px;
+        }
+
+        .guess-input {
+          font-size: 22px;
+        }
+
+        .guess-button {
+          font-size: 22px;
+        }
+
+        .input-label {
+          flex-basis: 32px;
+        }
+      }
+
+      /* ---------- Classic board (current layout, unchanged sizes) ---------- */
+
+      .classic-board {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(100% - 16px, calc(324px * var(--ui)));
+        margin-top: var(--board-top);
+        margin-bottom: var(--board-top);
+      }
+
+      .classic-board .info-card {
+        width: 100%;
+      }
+
+      .classic-board .image-container {
+        max-height: max(110px, 100dvh - var(--chrome-classic));
+      }
+
+      .c-stats {
+        margin: 6px 0 10px;
+        font-size: 26px;
+      }
+
+      .c-guesses {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+      }
+
+      .c-row {
+        height: 34px;
+        border-radius: 8px;
+        background: gray;
+        box-shadow: inset 0 0 5px;
+      }
+
+      /* ---------- Panels: about / stats / archive ---------- */
+
+      .panel {
+        width: min(100% - 16px, 360px);
+        margin-top: var(--board-top);
+        margin-bottom: var(--board-top);
+      }
+
+      .panel.info {
+        box-sizing: border-box;
+        max-height: calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h) - 24px);
+        /* Keep copy clear of the overlay scrollbar on the right edge. */
+        padding-right: 14px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+      }
+
+      .view[data-view="stats"] .paper-card:not(.archive) {
+        max-height: calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h) - 24px);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+
+      .info {
+        font-size: 20px;
+      }
+
+      .info-section {
+        margin-top: 8px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid gray;
+      }
+
+      .info-section h3 {
+        margin-bottom: 6px;
+        font-weight: normal;
+      }
+
+      .info-section ul {
+        margin: 6px 0 6px 1rem;
+        list-style: square;
+      }
+
+      .mini-receipt {
+        margin: 6px auto;
+        width: 220px;
+        padding: 6px 10px;
+        font-size: 18px;
+        line-height: 1.05;
+        color: var(--ink);
+        background: var(--paper);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      .lead-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35em;
+      }
+
+      .lead-row i {
+        flex: 1;
+        border-bottom: 2px dotted var(--ink-faint);
+      }
+
+      .c-stat-title {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .c-statistics {
+        display: flex;
+        justify-content: space-evenly;
+        margin-bottom: 24px;
+      }
+
+      .statistic {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat {
+        font-size: 66px;
+        line-height: 1;
+      }
+
+      .descriptor {
+        font-size: 22px;
+        line-height: 1;
+        text-align: center;
+      }
+
+      .graph-row {
+        display: flex;
+        align-items: center;
+        height: 26px;
+        margin-bottom: 12px;
+      }
+
+      .graph-label {
+        width: 1ch;
+        margin-right: 6px;
+      }
+
+      .graph-bar {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 4px;
+        font-size: 24px;
+        color: white;
+        background: var(--blue);
+      }
+
+      .arch-list {
+        font-size: 22px;
+      }
+
+      .arch-list .lead-row {
+        padding: 4px 0;
+        border-bottom: 2px solid gray;
+      }
+
+      .arch-list .lead-row i {
+        border-bottom-color: #9a9a9a;
+      }
+
+      .play-link {
+        color: var(--blue);
+      }
+
+      /* ---------- Receipt paper cards (end-of-game, stats, archive) ---------- */
+
+      .paper-card {
+        --mpx: 4px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: min(100% - 16px, 360px);
+        margin-top: var(--board-top);
+        margin-bottom: var(--board-top);
+        /* Soft drop-shadow follows the torn silhouette. A box-shadow on .sheet
+           was drawing a seam between the sheet and the bottom tear graphic. */
+        filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.28));
+      }
+
+      .tear {
+        flex: none;
+        height: calc(3 * var(--mpx));
+        background-repeat: repeat-x;
+        background-size: calc(12 * var(--mpx)) calc(3 * var(--mpx));
+        image-rendering: pixelated;
+      }
+
+      .tear.top {
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 3' shape-rendering='crispEdges' fill='%23f7f4ec'><rect x='2' width='2' height='1'/><rect x='7' width='3' height='1'/><rect y='1' width='5' height='1'/><rect x='6' y='1' width='5' height='1'/><rect y='2' width='12' height='1'/></svg>");
+      }
+
+      .tear.bottom {
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 3' shape-rendering='crispEdges' fill='%23f7f4ec'><rect width='12' height='1'/><rect y='1' width='5' height='1'/><rect x='6' y='1' width='5' height='1'/><rect x='2' y='2' width='2' height='1'/><rect x='7' y='2' width='3' height='1'/></svg>");
+      }
+
+      .sheet {
+        /* Shared with .arch-scroll gutters so the fade never outruns the paper. */
+        --sheet-pad-x: 18px;
+        position: relative;
+        min-height: 0;
+        padding: 6px var(--sheet-pad-x) 14px;
+        font-size: 20px;
+        line-height: 1.1;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      /* Archive: fixed receipt chrome + scrollable history for hundreds of games. */
+      .paper-card.archive {
+        --archive-h: min(
+          720px,
+          calc(100dvh - var(--header-h) - var(--tab-h) - var(--footer-h) - 190px)
+        );
+        width: min(100% - 16px, 400px);
+        /* Definite height so the inner flex scroll region can shrink and wheel-scroll. */
+        height: var(--archive-h);
+        max-height: var(--archive-h);
+        overflow: hidden;
+      }
+
+      .paper-card.archive .sheet {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+      }
+
+      .arch-head {
+        flex: none;
+      }
+
+      .arch-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: center;
+        margin: 8px 0 4px;
+      }
+
+      .arch-chip {
+        padding: 2px 8px 3px;
+        font-size: 16px;
+        line-height: 1;
+        color: var(--ink-soft);
+        border: 2px solid #cfcac0;
+        background: #efebe3;
+        cursor: pointer;
+      }
+
+      .arch-chip[aria-pressed="true"] {
+        color: var(--paper);
+        border-color: var(--ink);
+        background: var(--ink);
+      }
+
+      /* Fade stays pinned to the visible bottom of the list, not the content end. */
+      .arch-scroll-shell {
+        position: relative;
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+        margin: 0 calc(-1 * var(--sheet-pad-x));
+        overflow: hidden;
+      }
+
+      .arch-scroll-shell::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        height: 22px;
+        pointer-events: none;
+        background: linear-gradient(
+          to bottom,
+          rgba(247, 244, 236, 0),
+          rgba(247, 244, 236, 0.92)
+        );
+      }
+
+      .arch-scroll {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 0 var(--sheet-pad-x) 14px;
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+
+      .arch-month-group {
+        margin: 0;
+      }
+
+      .arch-month-group > .arch-month {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+        margin: 8px -4px 2px;
+        padding: 3px 4px;
+        font-family: inherit;
+        font-size: 15px;
+        letter-spacing: 0.04em;
+        color: var(--ink-soft);
+        list-style: none;
+        cursor: pointer;
+        background: #ebe7de;
+        border: none;
+        width: calc(100% + 8px);
+        box-sizing: border-box;
+        text-align: left;
+      }
+
+      .arch-month-group > .arch-month::-webkit-details-marker {
+        display: none;
+      }
+
+      .arch-month-group > .arch-month::after {
+        content: "▸";
+        margin-left: auto;
+        font-size: 0.9em;
+        color: var(--ink-faint);
+      }
+
+      .arch-month-group[open] > .arch-month::after {
+        content: "▾";
+      }
+
+      .arch-month-body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .arch-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35em;
+        margin: 0 -4px;
+        padding: 5px 4px;
+        border-bottom: 2px solid #e4dfd4;
+        cursor: default;
+      }
+
+      .arch-row.arch-playable,
+      .arch-row.arch-open {
+        cursor: pointer;
+      }
+
+      .arch-row.arch-playable:hover,
+      .arch-row.arch-open:hover {
+        background: #ebe7de;
+      }
+
+      .arch-row.arch-playable:hover .score.open,
+      .arch-row.arch-open:hover .score {
+        color: var(--blue);
+      }
+
+      .arch-row .num {
+        flex: none;
+        min-width: 5.5ch;
+      }
+
+      .arch-row .date {
+        flex: none;
+        color: var(--ink-soft);
+      }
+
+      .arch-row .dots {
+        flex: 1;
+        min-width: 8px;
+        border-bottom: 2px dotted var(--ink-faint);
+      }
+
+      .arch-row .score {
+        flex: none;
+        text-align: right;
+      }
+
+      .arch-row .score.open {
+        color: var(--blue);
+      }
+
+      .arch-empty {
+        padding: 24px 8px;
+        text-align: center;
+        color: var(--ink-soft);
+      }
+
+      .arch-foot {
+        flex: none;
+        padding: 8px 0 12px;
+        font-size: 15px;
+        text-align: center;
+        color: var(--ink-soft);
+        border-top: 2px dashed var(--ink-faint);
+        background: var(--paper);
+      }
+
+      .f-logo {
+        font-size: 40px;
+        line-height: 1;
+        text-align: center;
+        color: var(--red);
+      }
+
+      .f-logo span {
+        color: var(--blue);
+      }
+
+      .f-center {
+        text-align: center;
+      }
+
+      .f-faint {
+        color: var(--ink-soft);
+      }
+
+      .f-dash {
+        height: 2px;
+        margin: 8px 0;
+        background: repeating-linear-gradient(
+          to right,
+          var(--ink-faint) 0 6px,
+          transparent 6px 10px
+        );
+      }
+
+      .f-dash.double {
+        height: 6px;
+        background: repeating-linear-gradient(
+              to right,
+              var(--ink) 0 6px,
+              transparent 6px 10px
+            )
+            top / 100% 2px no-repeat,
+          repeating-linear-gradient(
+              to right,
+              var(--ink) 0 6px,
+              transparent 6px 10px
+            )
+            bottom / 100% 2px no-repeat;
+      }
+
+      .f-grid {
+        display: grid;
+        grid-template-columns: 1.6ch repeat(3, minmax(0, 1fr));
+        column-gap: 6px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .f-grid > :first-child {
+        text-align: left;
+      }
+
+      .f-head {
+        font-size: 16px;
+        color: var(--ink-soft);
+      }
+
+      .f-item {
+        display: grid;
+        grid-template-columns: 1.6ch minmax(0, 1fr);
+        column-gap: 6px;
+        margin-top: 4px;
+      }
+
+      .f-name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .f-total {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 24px;
+      }
+
+      .f-amt {
+        font-size: 40px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .f-amt.long {
+        font-size: 30px;
+      }
+
+      .f-rating {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .f-rating span:first-child {
+        font-size: 16px;
+      }
+
+      .f-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0;
+      }
+
+      .f-share {
+        margin: 10px 0;
+        height: 46px;
+      }
+
+      .f-close {
+        position: absolute;
+        top: 2px;
+        right: 8px;
+        font-size: 34px;
+        line-height: 1;
+        color: var(--ink-soft);
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+
+      .barcode {
+        height: 36px;
+        margin: 10px 12px 4px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--ink) 0 2px,
+          transparent 2px 4px,
+          var(--ink) 4px 5px,
+          transparent 5px 8px,
+          var(--ink) 8px 11px,
+          transparent 11px 12px
+        );
+      }
+
+      .s-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        text-align: center;
+      }
+
+      .s-grid b {
+        display: block;
+        font-size: 36px;
+        font-weight: normal;
+        line-height: 1;
+      }
+
+      .s-grid span {
+        display: block;
+        font-size: 15px;
+        line-height: 1;
+        color: var(--ink-soft);
+      }
+
+      .s-bar-row {
+        display: grid;
+        grid-template-columns: 6ch 1fr;
+        align-items: center;
+        gap: 6px;
+        margin: 6px 0;
+        font-size: 18px;
+      }
+
+      .s-bar {
+        height: 18px;
+        padding-right: 4px;
+        line-height: 18px;
+        text-align: right;
+        color: var(--paper);
+        background: var(--ink);
+      }
+
+      #end-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        display: grid;
+        place-items: center;
+        padding: 16px 12px;
+        background: rgba(40, 40, 40, 0.45);
+      }
+
+      /* Prefill/measure during tear: card lays out, but stays invisible. */
+      #end-modal.is-tearing {
+        background: rgba(40, 40, 40, 0);
+        pointer-events: none;
+      }
+
+      #end-modal.is-tearing .paper-card.final {
+        opacity: 0;
+      }
+
+      #end-modal.is-tearing.is-flying {
+        transition: background 0.55s ease;
+        background: rgba(40, 40, 40, 0.45);
+      }
+
+      .paper-card.final {
+        width: min(360px, 100%);
+        max-height: calc(100dvh - 32px);
+        margin: 0;
+      }
+
+      .final .sheet {
+        overflow-y: auto;
+      }
+
+      /* First-visit Costcodle V2 announcement (about-style copy on the receipt). */
+      .f-announce {
+        padding: 4px 2px 8px;
+        font-size: 18px;
+        line-height: 1.25;
+        text-align: left;
+      }
+
+      .f-announce-block {
+        margin-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e4dfd4;
+      }
+
+      .f-announce-block:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .f-announce-block h3 {
+        margin: 0 0 4px;
+        font-size: 20px;
+        font-weight: normal;
+        text-decoration: underline;
+        text-align: center;
+      }
+
+      .f-announce-block p {
+        margin: 0 0 6px;
+      }
+
+      .f-announce-block p:last-child {
+        margin-bottom: 0;
+      }
+
+      #end-modal.is-announce .f-share {
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      /*
+        Flying receipt: starts as the clipped machine tape (may sit under the
+        header for tall days), then enlarges above chrome into the modal card.
+      */
+      .receipt-flyer {
+        position: fixed;
+        z-index: 30;
+        overflow: hidden;
+        pointer-events: none;
+        transform-origin: 50% 100%;
+        filter: drop-shadow(calc(0.5 * var(--px)) 0 calc(0.5 * var(--px)) rgba(0, 0, 0, 0.18));
+        transition:
+          left 0.58s cubic-bezier(0.2, 0.85, 0.25, 1),
+          top 0.58s cubic-bezier(0.2, 0.85, 0.25, 1),
+          width 0.58s cubic-bezier(0.2, 0.85, 0.25, 1),
+          height 0.58s cubic-bezier(0.2, 0.85, 0.25, 1),
+          filter 0.58s ease,
+          transform 0.18s steps(2, end);
+        will-change: left, top, width, height, transform;
+      }
+
+      .receipt-flyer.is-ripping {
+        animation: receipt-rip 0.3s steps(2, end) forwards;
+      }
+
+      .receipt-flyer.is-flying {
+        filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.28));
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      .receipt-flyer .flyer-tape,
+      .receipt-flyer .flyer-modal {
+        position: absolute;
+        inset: 0;
+        transition: opacity 0.4s ease 0.12s;
+      }
+
+      .receipt-flyer .flyer-tape {
+        overflow: hidden;
+        opacity: 1;
+      }
+
+      .receipt-flyer .flyer-tape .r-roll {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .receipt-flyer .flyer-modal {
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+        max-height: none !important;
+        margin: 0 !important;
+        opacity: 0;
+        filter: none;
+      }
+
+      .receipt-flyer .flyer-modal .sheet {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .receipt-flyer.is-flying .flyer-tape {
+        opacity: 0;
+      }
+
+      .receipt-flyer.is-flying .flyer-modal {
+        opacity: 1;
+      }
+
+      @keyframes receipt-rip {
+        0% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+        }
+        20% {
+          transform: translate(-3px, -2px) rotate(-1.8deg) scale(1.01);
+        }
+        45% {
+          transform: translate(4px, -12px) rotate(1.6deg) scale(1.02);
+        }
+        70% {
+          transform: translate(-2px, -20px) rotate(-0.8deg) scale(1.03);
+        }
+        100% {
+          transform: translate(0, -26px) rotate(0.3deg) scale(1.04);
+        }
+      }
+
+      @media (max-width: 559px) {
+        .paper-card {
+          --mpx: 3px;
+        }
+
+        .sheet {
+          --sheet-pad-x: 12px;
+          padding: 6px var(--sheet-pad-x) 12px;
+          font-size: 18px;
+        }
+      }
+
+      /* ---------- Footer ---------- */
+
+      #site-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--footer-h);
+        padding: 0 12px;
+        font-size: var(--footer-font);
+        border-top: 2px solid gray;
+      }
+
+      #site-footer a {
+        color: black;
+      }
+
+/* ---------- Toasts ---------- */
+.toast {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  font-size: 22px;
+  color: white;
+  background: #333;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.hide {
+  display: none;
+}
+
+/*
+  Anchor owns horizontal centering via translateX(-50%).
+  Animate.css flips the inner .toast transform — keeping position on the parent
+  is what actually keeps "Copied…" centered above Share.
+*/
+.toast-anchor {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+.toast-anchor.hide {
+  display: none;
+}
+.toast-anchor .toast {
+  position: static;
+  left: auto;
+  bottom: auto;
+  transform: none;
+  display: block;
+}
+
+/* Warning toast sits over the product title; share toast sits above its button. */
+#warning-toast-anchor {
+  transform: translate(-50%, -50%);
+}
+.tab-link {
+  display: inline-flex;
+  align-items: flex-end;
+  padding: 0 6px 1px;
+  font-size: var(--tab-font);
+  letter-spacing: 1px;
+  color: #6f6f6f;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.tab-link[aria-selected="true"] {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}

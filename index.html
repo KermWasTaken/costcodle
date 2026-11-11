@@ -6,323 +6,437 @@
     <title>COSTCODLE</title>
 
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-J8Q97VV1GQ"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8Q97VV1GQ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-J8Q97VV1GQ");
     </script>
 
-    <!-- Favicon Configuration -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/public/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/public/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/public/favicon-16x16.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png" />
     <link rel="manifest" href="/public/site.webmanifest" />
-    <link
-      rel="mask-icon"
-      href="/public/safari-pinned-tab.svg"
-      color="#5bbad5"
-    />
+    <link rel="mask-icon" href="/public/safari-pinned-tab.svg" color="#5bbad5" />
     <link rel="shortcut icon" href="/public/favicon.ico" />
     <meta name="msapplication-TileColor" content="#dcdcdc" />
     <meta name="msapplication-config" content="/public/browserconfig.xml" />
     <meta name="theme-color" content="#ffffff" />
 
+    <link rel="stylesheet" href="styles/checkout.css" />
     <link rel="stylesheet" href="styles/game.css" />
     <link rel="stylesheet" href="styles/overlay.css" />
-    <link rel="stylesheet" href="styles/global.css" />
-
+    <link rel="stylesheet" href="styles/classic-embed.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
       rel="stylesheet"
     />
-
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-      defer
-    ></script>
-
-    <script src="scripts/main.js" defer></script>
-    <script src="scripts/searchBar.js" defer></script>
   </head>
-
   <body>
-    <div id="main-page">
+    <div id="page">
       <header id="site-header">
-        <div id="header-container">
-          <button id="info-button" data-overlay="info-overlay" type="button">
-            ?
-          </button>
-          <h1 id="title" class="title costco-red">
-            <center>COSTCO<span class="costco-blue">DLE</span></center>
-          </h1>
-          <button id="stat-button" data-overlay="stats-overlay" type="button">
-            <img
-              src="./assets/stat-logo.svg"
-              style="height: 100%; width: 100%"
-            />
-          </button>
+        <div id="header-row">
+          <div class="hdr-group">
+            <button id="info-button" class="hdr-btn" type="button" data-view-btn="about" aria-label="How to play">?</button>
+            <button class="hdr-btn" type="button" data-view-btn="archive" aria-label="Archive">
+              <svg viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">
+                <rect x="3" y="0" width="1" height="2" /><rect x="8" y="0" width="1" height="2" />
+                <rect x="1" y="1" width="10" height="2" /><rect x="1" y="3" width="1" height="8" />
+                <rect x="10" y="3" width="1" height="8" /><rect x="1" y="10" width="10" height="1" />
+                <rect x="3" y="5" width="1" height="1" /><rect x="5" y="5" width="1" height="1" />
+                <rect x="7" y="5" width="1" height="1" /><rect x="3" y="7" width="1" height="1" />
+                <rect x="5" y="7" width="1" height="1" />
+              </svg>
+            </button>
+          </div>
+          <h1 id="title"></h1>
+          <div class="hdr-group right">
+            <button class="hdr-btn" type="button" id="mute-btn" aria-label="Mute sound" aria-pressed="false"></button>
+            <button id="stat-button" class="hdr-btn" type="button" data-view-btn="stats" aria-label="Statistics">
+              <img src="./assets/stat-logo.svg" alt="" />
+            </button>
+          </div>
         </div>
+        <nav id="mode-tabs" aria-label="Game mode">
+          <button class="tab" type="button" data-mode-btn="checkout" aria-selected="true">CHECKOUT</button>
+          <button class="tab" type="button" data-mode-btn="classic" aria-selected="false">CLASSIC</button>
+        </nav>
       </header>
 
-      <main id="game-container">
-        <div id="share-toast" class="animate__animated hide">
-          <center>Results copied to clipboard</center>
-        </div>
-        <div id="info-card" class="animate__animated">
-          <div id="image-container"></div>
-          <div id="product-info"></div>
-        </div>
-        <div id="game-stats"></div>
-        <div id="guesses-container">
-          <div id="warning-toast" class="animate__animated hide">
-            <center>Invalid Guess ⚠️</center>
-          </div>
-          <div id="1" class="guess-container"></div>
-          <div id="2" class="guess-container"></div>
-          <div id="3" class="guess-container"></div>
-          <div id="4" class="guess-container"></div>
-          <div id="5" class="guess-container"></div>
-          <div id="6" class="guess-container"></div>
-          <div
-            id="input-container"
-            class="guess-container transparent-background"
-          >
-            <div id="text-input-container">
-              <div id="input-label">$</div>
-              <input
-                id="guess-input"
-                type="text"
-                pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
-                data-type="currency"
-                placeholder="Enter a guess..."
-              />
+      <div id="content">
+        <main id="center">
+          <section class="view" data-mode="checkout" data-view="game">
+            <div id="board">
+              <div id="col-play">
+                <div class="info-card">
+                  <div class="image-container">
+                    <img id="r-image" class="product-image" alt="" />
+                    <div id="r-tag" class="price-tag" hidden></div>
+                  </div>
+                  <div id="r-name" class="product-info"></div>
+                </div>
+                <div id="round-status">
+                  <span id="round-label"></span>
+                  <span id="pips" class="pips" aria-hidden="true"></span>
+                </div>
+                <div id="input-row" class="input-row"></div>
+              </div>
+
+              <div id="col-printer">
+                <div id="ruler" hidden></div>
+                <div id="paper" role="img" aria-label="Receipt"></div>
+                <div id="printer" aria-hidden="true">
+                  <div id="printer-back" class="printer-layer"></div>
+                  <div id="printer-front" class="printer-layer"></div>
+                  <div id="printer-led"></div>
+                  <div id="lcd">
+                    <div id="lcd-round"></div>
+                    <div id="lcd-sum">
+                      <span id="lcd-label">TOTAL</span>
+                      <span id="lcd-total"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div id="button-container">
-              <button id="guess-button" class="active">SUBMIT</button>
-            </div>
-          </div>
-        </div>
-        <div id="info-overlay" class="overlay" style="display: none">
-          <div id="info-body" class="overlay-body">
-            <div class="info-section">
-              <h3><u>The game</u></h3>
-              <p>
-                Guess the <span class="costco-red">COSTCO</span
-                ><span class="costco-blue">DLE</span> in 6 tries.
-              </p>
-              <br />
-              <ul style="list-style-type: square">
-                <li>Each guess must be a valid price.</li>
-                <li>
-                  Incorrect guesses will help guide you to the target price.
-                </li>
-              </ul>
-              <br />
-              <p>If you guess within 5% of the target price, you win!</p>
-              <br />
-              <p>
-                A new <span class="costco-red">COSTCO</span
-                ><span class="costco-blue">DLE</span> is available every day!
-              </p>
-            </div>
-            <div class="info-section">
-              <h3><u>Examples</u></h3>
-              <div class="guess-container transparent-background">
-                <div class="guess-value-container animate__flipInX">$10.00</div>
+          </section>
+
+          <section class="view" data-mode="classic" data-view="game" hidden>
+            <div id="game-container">
+              <div id="info-card" class="animate__animated">
+                <div id="image-container"></div>
+                <div id="product-info"></div>
+              </div>
+              <div id="game-stats"></div>
+              <div id="guesses-container">
+                <div id="1" class="guess-container"></div>
+                <div id="2" class="guess-container"></div>
+                <div id="3" class="guess-container"></div>
+                <div id="4" class="guess-container"></div>
+                <div id="5" class="guess-container"></div>
+                <div id="6" class="guess-container"></div>
                 <div
-                  class="guess-direction-container animate__flipInX guess-far"
+                  id="input-container"
+                  class="guess-container transparent-background"
                 >
-                  &uarr;
-                </div>
-              </div>
-              <p>
-                First guess of $10.00 is low by more than 25% of the target
-                price.
-              </p>
-              <br />
-              <div class="guess-container transparent-background">
-                <div class="guess-value-container animate__flipInX">$18.00</div>
-                <div
-                  class="guess-direction-container animate__flipInX guess-near"
-                >
-                  &darr;
-                </div>
-              </div>
-              <p>
-                Next guess of $18.00 is too high but within 25% of the target
-                price.
-              </p>
-              <br />
-              <div class="guess-container transparent-background">
-                <div class="guess-value-container animate__flipInX">$16.00</div>
-                <div
-                  class="guess-direction-container animate__flipInX guess-win"
-                >
-                  &check;
-                </div>
-              </div>
-              <p>
-                The guess of $16.00 was within 5% of the target price! You win!
-              </p>
-            </div>
-            <div class="info-section">
-              <p>
-                If you would like to support my work, you can
-                <a
-                  href="https://www.buymeacoffee.com/kerm"
-                  target="_blank"
-                  noreferrer="noopener noreferrer"
-                  >buy me a coffee!<span style="font-size: 14px">☕</span></a
-                >
-              </p>
-            </div>
-            <div class="info-section">
-              <p>
-                Source code available on my
-                <a
-                  href="https://github.com/KermWasTaken"
-                  target="_blank"
-                  noreferrer="noopener noreferrer"
-                  >GitHub</a
-                >!
-              </p>
-              <p>
-                Suggestions? Find a bug?
-                <a href="mailto: costcodle@gmail.com">Let me know!</a>
-              </p>
-            </div>
-            <div class="info-section">
-              <p>
-                Special thanks to
-                <a
-                  href="https://oec.world/en/tradle/"
-                  target="_blank"
-                  noreferrer="noopener noreferrer"
-                >
-                  <span style="color: rgb(255, 166, 63)">TRAD</span>LE</a
-                >
-                and
-                <a
-                  href="https://www.nytimes.com/games/wordle/index.html"
-                  target="_blank"
-                  noreferrer="noopener noreferrer"
-                  >Wordle</a
-                >
-                for inspiring <span class="costco-red">COSTCO</span
-                ><span class="costco-blue">DLE</span>!
-              </p>
-              <br />
-              <p>And thank you for checking out my game!</p>
-            </div>
-            <div style="margin-top: 8px">
-              <p>
-                Created by
-                <a
-                  href="https://github.com/KermWasTaken"
-                  target="_blank"
-                  noreferrer="noopener noreferrer"
-                  >@Kerm</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-        <div id="stats-overlay" class="overlay" style="display: none">
-          <div id="stat-body" class="overlay-body">
-            <p id="statistics-title">STATISTICS</p>
-            <div id="statistics">
-              <div class="statistic">
-                <div id="number-wins" class="stat"></div>
-                <div class="descriptor">Played</div>
-              </div>
-              <div class="statistic">
-                <div id="win-percent" class="stat"></div>
-                <div class="descriptor">Win %</div>
-              </div>
-              <div class="statistic">
-                <div id="current-streak" class="stat"></div>
-                <div class="descriptor">
-                  <center>Current<br />Streak</center>
-                </div>
-              </div>
-              <div class="statistic">
-                <div id="max-streak" class="stat"></div>
-                <div class="descriptor">
-                  <center>Max<br />Streak</center>
+                  <div id="text-input-container">
+                    <div id="input-label">$</div>
+                    <input
+                      id="guess-input"
+                      type="text"
+                      pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
+                      data-type="currency"
+                      placeholder="Enter a guess..."
+                    />
+                  </div>
+                  <div id="button-container">
+                    <button id="guess-button" class="active">SUBMIT</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <p>GUESS DISTRIBUTION</p>
-            <div class="graph">
-              <div class="graph-row">
-                <div class="graph-label">1</div>
-                <div id="graph-1" class="graphElem"></div>
+          </section>
+
+          <section class="view" data-mode="classic" data-view="about" hidden>
+            <div class="panel info classic-panel">
+              <div class="info-section">
+                <h3><u>The game</u></h3>
+                <p>
+                  Guess the <span class="costco-red">COSTCO</span><span class="costco-blue">DLE</span> in 6 tries.
+                </p>
+                <ul style="list-style-type: square">
+                  <li>Each guess must be a valid price.</li>
+                  <li>Incorrect guesses will help guide you to the target price.</li>
+                </ul>
+                <p>If you guess within 5% of the target price, you win!</p>
+                <p>
+                  A new <span class="costco-red">COSTCO</span><span class="costco-blue">DLE</span> is available every day!
+                </p>
               </div>
-              <div class="graph-row">
-                <div class="graph-label">2</div>
-                <div id="graph-2" class="graphElem"></div>
+              <div class="info-section">
+                <h3><u>Examples</u></h3>
+                <div class="guess-container transparent-background classic-example">
+                  <div class="guess-value-container">$10.00</div>
+                  <div class="guess-direction-container guess-far">&uarr;</div>
+                </div>
+                <p>First guess of $10.00 is low by more than 25% of the target price.</p>
+                <div class="guess-container transparent-background classic-example">
+                  <div class="guess-value-container">$18.00</div>
+                  <div class="guess-direction-container guess-near">&darr;</div>
+                </div>
+                <p>Next guess of $18.00 is too high but within 25% of the target price.</p>
+                <div class="guess-container transparent-background classic-example">
+                  <div class="guess-value-container">$16.00</div>
+                  <div class="guess-direction-container guess-win">&check;</div>
+                </div>
+                <p>The guess of $16.00 was within 5% of the target price! You win!</p>
               </div>
-              <div class="graph-row">
-                <div class="graph-label">3</div>
-                <div id="graph-3" class="graphElem"></div>
+              <div class="info-section">
+                <p>
+                  If you would like to support my work, you can
+                  <a href="https://www.buymeacoffee.com/kerm" target="_blank" rel="noopener noreferrer"
+                    >buy me a coffee!<span style="font-size: 14px">☕</span></a
+                  >
+                </p>
               </div>
-              <div class="graph-row">
-                <div class="graph-label">4</div>
-                <div id="graph-4" class="graphElem"></div>
+              <div class="info-section">
+                <p>
+                  Source code available on my
+                  <a href="https://github.com/KermWasTaken" target="_blank" rel="noopener noreferrer">GitHub</a>!
+                </p>
+                <p>
+                  Suggestions? Find a bug?
+                  <a href="mailto:costcodle@gmail.com">Let me know!</a>
+                </p>
               </div>
-              <div class="graph-row">
-                <div class="graph-label">5</div>
-                <div id="graph-5" class="graphElem"></div>
+              <div class="info-section">
+                <p>
+                  Special thanks to
+                  <a href="https://oec.world/en/tradle/" target="_blank" rel="noopener noreferrer"
+                    ><span style="color: rgb(255, 166, 63)">TRAD</span>LE</a
+                  >
+                  and
+                  <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer"
+                    >Wordle</a
+                  >
+                  for inspiring <span class="costco-red">COSTCO</span><span class="costco-blue">DLE</span>!
+                </p>
+                <p>And thank you for checking out my game!</p>
               </div>
-              <div class="graph-row">
-                <div class="graph-label">6</div>
-                <div id="graph-6" class="graphElem"></div>
+              <div class="info-section">
+                <p>
+                  Created by
+                  <a href="https://github.com/KermWasTaken" target="_blank" rel="noopener noreferrer">@Kerm</a>
+                </p>
               </div>
             </div>
-          </div>
-        </div>
-      </main>
+          </section>
+
+          <section class="view" data-mode="classic" data-view="stats" hidden>
+            <div id="classic-stat-body" class="classic-stats-panel">
+              <p id="statistics-title">STATISTICS</p>
+              <div id="statistics">
+                <div class="statistic">
+                  <div id="number-wins" class="stat"></div>
+                  <div class="descriptor">Played</div>
+                </div>
+                <div class="statistic">
+                  <div id="win-percent" class="stat"></div>
+                  <div class="descriptor">Win %</div>
+                </div>
+                <div class="statistic">
+                  <div id="current-streak" class="stat"></div>
+                  <div class="descriptor"><center>Current<br />Streak</center></div>
+                </div>
+                <div class="statistic">
+                  <div id="max-streak" class="stat"></div>
+                  <div class="descriptor"><center>Max<br />Streak</center></div>
+                </div>
+              </div>
+              <p>GUESS DISTRIBUTION</p>
+              <div class="graph">
+                <div class="graph-row">
+                  <div class="graph-label">1</div>
+                  <div id="graph-1" class="graphElem"></div>
+                </div>
+                <div class="graph-row">
+                  <div class="graph-label">2</div>
+                  <div id="graph-2" class="graphElem"></div>
+                </div>
+                <div class="graph-row">
+                  <div class="graph-label">3</div>
+                  <div id="graph-3" class="graphElem"></div>
+                </div>
+                <div class="graph-row">
+                  <div class="graph-label">4</div>
+                  <div id="graph-4" class="graphElem"></div>
+                </div>
+                <div class="graph-row">
+                  <div class="graph-label">5</div>
+                  <div id="graph-5" class="graphElem"></div>
+                </div>
+                <div class="graph-row">
+                  <div class="graph-label">6</div>
+                  <div id="graph-6" class="graphElem"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" data-mode="classic" data-view="archive" hidden>
+            <div class="paper-card archive">
+              <div class="tear top"></div>
+              <div class="sheet">
+                <div class="arch-head">
+                  <div class="f-logo">COSTCO<span>DLE</span></div>
+                  <div class="f-center">PAST GAMES</div>
+                  <div id="classic-arch-summary" class="f-center f-faint"></div>
+                  <div class="f-dash"></div>
+                  <div id="classic-arch-chips" class="arch-tools" role="toolbar" aria-label="Filter by year"></div>
+                </div>
+                <div class="arch-scroll-shell">
+                  <div id="classic-arch-scroll" class="arch-scroll" tabindex="0" aria-label="Past classic games"></div>
+                </div>
+                <div id="classic-arch-foot" class="arch-foot"></div>
+              </div>
+              <div class="tear bottom"></div>
+            </div>
+          </section>
+
+          <section class="view" data-mode="checkout" data-view="about">
+            <div class="panel info">
+              <div class="info-section">
+                <h3><u>The game</u></h3>
+                <p>
+                  Guess the prices of today's 5 <span class="costco-red">COSTCO</span><span class="costco-blue">DLE</span>
+                  products.
+                </p>
+                <ul>
+                  <li>Each guess must be a valid price.</li>
+                  <li>After each guess, the real price is revealed.</li>
+                  <li>How far off you were gets printed on your receipt.</li>
+                </ul>
+                <p>Your score is the total dollars you were off by. Lower is better!</p>
+              </div>
+              <div class="info-section">
+                <h3><u>Example</u></h3>
+                <div class="mini-receipt">
+                  <div class="lead-row"><span>1 RAMEN</span><i></i><span>2.00</span></div>
+                  <div class="lead-row"><span>2 SALMON</span><i></i><span>4.99</span></div>
+                  <div class="lead-row"><span>TOTAL</span><i></i><span>6.99</span></div>
+                </div>
+                <p>Miss by a lot and your receipt gets looooong.</p>
+              </div>
+              <div class="info-section">
+                <p>A new receipt prints every day!</p>
+              </div>
+              <div class="info-section">
+                <p>
+                  If you would like to support my work, you can
+                  <a href="https://www.buymeacoffee.com/kerm" target="_blank" rel="noopener noreferrer"
+                    >buy me a coffee!<span style="font-size: 14px">☕</span></a
+                  >
+                </p>
+              </div>
+              <div class="info-section">
+                <p>
+                  Source code available on my
+                  <a href="https://github.com/KermWasTaken" target="_blank" rel="noopener noreferrer">GitHub</a>!
+                </p>
+                <p>
+                  Suggestions? Find a bug?
+                  <a href="mailto:costcodle@gmail.com">Let me know!</a>
+                </p>
+              </div>
+              <div class="info-section">
+                <p>
+                  Special thanks to
+                  <a href="https://oec.world/en/tradle/" target="_blank" rel="noopener noreferrer"
+                    ><span style="color: rgb(255, 166, 63)">TRAD</span>LE</a
+                  >
+                  and
+                  <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noopener noreferrer"
+                    >Wordle</a
+                  >
+                  for inspiring <span class="costco-red">COSTCO</span><span class="costco-blue">DLE</span>!
+                </p>
+                <p>And thank you for checking out my game!</p>
+              </div>
+              <div class="info-section">
+                <p>
+                  Created by
+                  <a href="https://github.com/KermWasTaken" target="_blank" rel="noopener noreferrer">@Kerm</a>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" data-mode="checkout" data-view="stats">
+            <div class="paper-card">
+              <div class="tear top"></div>
+              <div class="sheet">
+                <div class="f-logo">COSTCO<span>DLE</span></div>
+                <div class="f-center">MEMBER STATS</div>
+                <div class="f-center f-faint">SAMPLE DATA</div>
+                <div class="f-dash"></div>
+                <div class="s-grid">
+                  <div><b>37</b><span>PLAYED</span></div>
+                  <div><b>4</b><span>STREAK</span></div>
+                  <div><b>12</b><span>MAX<br />STREAK</span></div>
+                  <div><b>$1.86</b><span>BEST</span></div>
+                </div>
+                <div class="f-dash"></div>
+                <div class="lead-row"><span>AVERAGE OFF</span><i></i><span>$14.20</span></div>
+                <div class="lead-row"><span>TODAY</span><i></i><span id="stats-today"></span></div>
+                <div class="f-dash"></div>
+                <div class="f-center">DAILY TOTALS</div>
+                <div class="s-bar-row"><span>&lt;$5</span><div class="s-bar" style="width: 27%">4</div></div>
+                <div class="s-bar-row"><span>$5-10</span><div class="s-bar" style="width: 60%">9</div></div>
+                <div class="s-bar-row"><span>$10-25</span><div class="s-bar" style="width: 100%">15</div></div>
+                <div class="s-bar-row"><span>$25-50</span><div class="s-bar" style="width: 40%">6</div></div>
+                <div class="s-bar-row"><span>$50+</span><div class="s-bar" style="width: 20%">3</div></div>
+                <button class="pill f-share" type="button" data-open-final>VIEW TODAY'S RECEIPT</button>
+              </div>
+              <div class="tear bottom"></div>
+            </div>
+          </section>
+
+          <section class="view" data-mode="checkout" data-view="archive">
+            <div class="paper-card archive">
+              <div class="tear top"></div>
+              <div class="sheet">
+                <div class="arch-head">
+                  <div class="f-logo">COSTCO<span>DLE</span></div>
+                  <div class="f-center">PAST RECEIPTS</div>
+                  <div id="arch-summary" class="f-center f-faint"></div>
+                  <div class="f-dash"></div>
+                  <div id="arch-chips" class="arch-tools" role="toolbar" aria-label="Filter by year"></div>
+                </div>
+                <div class="arch-scroll-shell">
+                  <div id="arch-scroll" class="arch-scroll" tabindex="0" aria-label="Past checkout games"></div>
+                </div>
+                <div id="arch-foot" class="arch-foot"></div>
+              </div>
+              <div class="tear bottom"></div>
+            </div>
+          </section>
+
+        </main>
+      </div>
 
       <footer id="site-footer">
-        <div id="database-link">
-          <a
-            href="https://costcofdb.com/food-database"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Costco Food Database</a
-          >
-        </div>
-        <div id="dev-name">&copy;Kerm</div>
+        <a href="https://costcofdb.com/food-database" target="_blank" rel="noopener noreferrer">Costco Food Database</a>
+        <span>&copy;Kerm</span>
       </footer>
     </div>
+
+    <div id="end-modal" hidden>
+      <div class="paper-card final" role="dialog" aria-modal="true" aria-labelledby="f-title">
+        <div class="tear top"></div>
+        <div id="final-sheet" class="sheet"></div>
+        <div class="tear bottom"></div>
+      </div>
+    </div>
+
+    <div id="warning-toast-anchor" class="toast-anchor hide">
+      <div id="warning-toast" class="toast animate__animated">Please enter a valid price</div>
+    </div>
+    <div id="checkout-share-toast-anchor" class="toast-anchor hide">
+      <div id="checkout-share-toast" class="toast animate__animated">Copied results to clipboard</div>
+    </div>
+
+    <script src="scripts/daily-ids.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+    <script src="scripts/searchBar.js?v=2" defer></script>
+    <script type="module" src="scripts/checkout/main.js"></script>
   </body>
 </html>
