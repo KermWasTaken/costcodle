@@ -1,0 +1,30 @@
+#Ads.txt costcodle.com
+#Ads.txt managed by AdsTxtManager.com - the free ads.txt management tool for publishers
+ownerdomain=costcodle.com
+contact=directsales@ezoic.com
+managerdomain=ezoic.ai
+
+ezoic.ai, ae461f4bd27992dda26169d78309ad16, DIRECT
+# 35
+google.com, pub-6644558441501035, DIRECT, f08c47fec0942fa0
+google.com, pub-1175987143200523, RESELLER, f08c47fec0942fa0
+google.com, pub-4152552776930088, DIRECT, f08c47fec0942fa0
+media.net, 8CAAT6RE8, DIRECT
+# 36
+lijit.com, 62299-eb, DIRECT, fafdf38b16bf6b2b
+indexexchange.com, 187973, DIRECT, 50b1c356f2c5c8fc
+media.net, 8CUL1AWYD, DIRECT
+rubiconproject.com, 21152, DIRECT, 0bfd66d529a55807
+sharethrough.com, 226d318d, DIRECT, d53b998a7bd4ecd2
+google.com, pub-6396844742497208, RESELLER, f08c47fec0942fa0
+adingo.jp, 24483, RESELLER
+improvedigital.com, 2254, RESELLER
+video.unrulymedia.com, 1346664749, DIRECT
+sonobi.com, 52355162e8, RESELLER, d1a215d9eb5aee9e
+media.net, 8CU21638R, DIRECT
+sharethrough.com, ArBQp2hu, DIRECT, d53b998a7bd4ecd2
+google.com, pub-1164220389861002, RESELLER, f08c47fec0942fa0
+improvedigital.com, 2383, RESELLER
+smaato.com, 1100057294, DIRECT
+sonobi.com, b9b6d1ca00, RESELLER, d1a215d9eb5aee9e
+adingo.jp, 30997, RESELLER
