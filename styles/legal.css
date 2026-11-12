@@ -1,4 +1,4 @@
-/* Static About / Privacy / Contact pages — reuse Checkout chrome, allow scrolling. */
+/* Static About / Privacy / Contact — fixed chrome, scrollable about-style panel. */
 
 a#title {
   text-decoration: none;
@@ -10,15 +10,17 @@ a#title:focus-visible {
   opacity: 0.9;
 }
 
+/* Keep header + footer pinned; only the panel body scrolls (like in-game about). */
 body.legal-page #page {
-  height: auto;
-  min-height: 100dvh;
-  max-height: none;
-  overflow: visible;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 body.legal-page #content {
-  overflow: visible;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 body.legal-page #center {
@@ -26,20 +28,23 @@ body.legal-page #center {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: auto;
+  height: 100%;
   min-height: 0;
   width: 100%;
-  padding: 0 8px 24px;
-  overflow: visible;
+  padding: 0 8px;
+  overflow: hidden;
 }
 
 body.legal-page .panel.info {
   width: min(100% - 16px, 420px);
-  max-height: none;
+  max-height: calc(100dvh - var(--header-h) - var(--footer-h) - 24px);
   margin-top: 12px;
   margin-bottom: 12px;
-  padding-right: 0;
-  overflow: visible;
+  /* Match in-game about panel: scroll inside the card, room for scrollbar. */
+  padding-right: 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 body.legal-page .info {
