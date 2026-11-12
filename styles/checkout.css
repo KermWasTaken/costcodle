@@ -1900,13 +1900,8 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 0 0.35em;
+        gap: 0 1ch;
         min-width: 0;
-      }
-
-      .footer-sep {
-        color: #555;
-        user-select: none;
       }
 
 /* ---------- Toasts ---------- */
