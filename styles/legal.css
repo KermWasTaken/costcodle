@@ -1,0 +1,73 @@
+/* Static About / Privacy / Contact pages — reuse Checkout chrome, allow scrolling. */
+
+a#title {
+  text-decoration: none;
+  color: var(--red);
+}
+
+a#title:hover,
+a#title:focus-visible {
+  opacity: 0.9;
+}
+
+body.legal-page #page {
+  height: auto;
+  min-height: 100dvh;
+  max-height: none;
+  overflow: visible;
+}
+
+body.legal-page #content {
+  overflow: visible;
+}
+
+body.legal-page #center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 8px 24px;
+}
+
+body.legal-page .panel.info {
+  width: min(100% - 16px, 420px);
+  max-height: none;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-right: 0;
+  overflow: visible;
+}
+
+body.legal-page .info {
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.legal-crumb {
+  margin: 10px 0 4px;
+  font-size: 18px;
+}
+
+.legal-crumb a {
+  color: black;
+}
+
+.legal-page-title {
+  margin: 4px 0 8px;
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 559px) {
+  body.legal-page .panel.info {
+    width: min(100%, 360px);
+  }
+
+  body.legal-page .info {
+    font-size: 18px;
+  }
+
+  .legal-page-title {
+    font-size: 24px;
+  }
+}

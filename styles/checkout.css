@@ -1883,14 +1883,30 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: var(--footer-h);
-        padding: 0 12px;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        height: auto;
+        min-height: var(--footer-h);
+        padding: 4px 12px;
         font-size: var(--footer-font);
         border-top: 2px solid gray;
       }
 
       #site-footer a {
         color: black;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0 0.35em;
+        min-width: 0;
+      }
+
+      .footer-sep {
+        color: #555;
+        user-select: none;
       }
 
 /* ---------- Toasts ---------- */
