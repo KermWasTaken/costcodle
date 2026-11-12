@@ -1904,6 +1904,12 @@
         min-width: 0;
       }
 
+      @media (max-width: 559px) {
+        #site-footer > span {
+          display: none;
+        }
+      }
+
 /* ---------- Toasts ---------- */
 .toast {
   position: fixed;
