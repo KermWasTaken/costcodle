@@ -1,0 +1,83 @@
+/* Static About / Privacy / Contact — fixed chrome, scrollable about-style panel. */
+
+a#title {
+  text-decoration: none;
+  color: var(--red);
+}
+
+a#title:hover,
+a#title:focus-visible {
+  opacity: 0.9;
+}
+
+/* Keep header + footer pinned; only the panel body scrolls (like in-game about). */
+body.legal-page #page {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+body.legal-page #content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+body.legal-page #center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+body.legal-page .panel.info {
+  width: min(100% - 16px, 420px);
+  max-height: calc(100dvh - var(--header-h) - var(--footer-h) - 24px);
+  margin-top: 12px;
+  margin-bottom: 12px;
+  /* Match in-game about panel: scroll inside the card, room for scrollbar. */
+  padding-right: 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+body.legal-page .info {
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.legal-crumb {
+  margin: 10px 0 4px;
+  font-size: 18px;
+}
+
+.legal-crumb a {
+  color: black;
+}
+
+.legal-page-title {
+  margin: 4px 0 8px;
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 559px) {
+  body.legal-page .panel.info {
+    width: min(100%, 360px);
+  }
+
+  body.legal-page .info {
+    font-size: 18px;
+  }
+
+  .legal-page-title {
+    font-size: 24px;
+  }
+}
